@@ -10,6 +10,7 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
+  // Initial
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -28,10 +29,17 @@ export default function Home() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         },
+        initialCords: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
       });
     })();
   }, []);
 
+  // Live tracking
   useEffect(() => {
     const interval = setInterval(() => {
       (async () => {
@@ -51,19 +59,19 @@ export default function Home() {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           },
-          droplocationCords: {
-            latitude: -6.374737,
-            longitude: 106.958507,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          },
         });
       })();
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   });
 
   const [state, setState] = useState({
+    initialCords: {
+      latitude: null,
+      longitude: null,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    },
     pickupCords: {
       latitude: 30.7046,
       longitude: 76.7179,
@@ -71,26 +79,22 @@ export default function Home() {
       longitudeDelta: 0.0421,
     },
     droplocationCords: {
-      latitude: 30.7333,
-      longitude: 76.7749,
+      latitude: -6.374737,
+      longitude: 106.958507,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },
   });
 
-  useEffect(() => {}, []);
-
-  // const getLiveLocation = async () => {
-  //   const locPermissionDenied = await locationPermission()
-  //   if (locPermissionDenied) {
-  //     const res = await getCurrentLocation()
-  //     console.log("res =>", res)
-  //   }
-  // }
-
   const mapRef = useRef();
 
-  const { pickupCords, droplocationCords } = state;
+  const { initialCords, pickupCords, droplocationCords } = state;
+
+  if (state.initialCords.latitude === null) {
+    return (
+      <Text>Loading Map...</Text>
+    )
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -103,19 +107,31 @@ export default function Home() {
           <Marker
             coordinate={pickupCords}
             image={imagePath.icCurrentLocation}
+            anchor={{x: 0.5, y: 0.5}}
           />
           <Marker
             coordinate={droplocationCords}
             image={imagePath.icGreenMarker}
           />
+
           <MapViewDirections
             origin={pickupCords}
             destination={droplocationCords}
             apikey="AIzaSyAAjzQFBz9jwJrx5p9CAgOLZgHoqfK7Wa8"
             strokeWidth={3}
-            strokeColor="hotpink"
+            strokeColor="#32CD32"
+            optimizeWaypoints={true}
+            
+          />
+          <MapViewDirections
+            origin={initialCords}
+            destination={droplocationCords}
+            apikey="AIzaSyAAjzQFBz9jwJrx5p9CAgOLZgHoqfK7Wa8"
+            strokeWidth={3}
+            strokeColor="gray"
             optimizeWaypoints={true}
             onReady={(result) => {
+              console.log(result.distance, result.duration)
               mapRef.current.fitToCoordinates(result.coordinates, {
                 edgePadding: {
                   right: 30,
