@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.nael2112.mobileclient"
     },
     "web": {
       "favicon": "./assets/favicon.png"

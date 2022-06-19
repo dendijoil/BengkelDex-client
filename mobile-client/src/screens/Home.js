@@ -1,13 +1,68 @@
-import { StatusBar } from "expo-status-bar";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MapViewDirections from "react-native-maps-directions";
-import * as Location from "expo-location";
 import imagePath from "../constants/imagePath";
+import * as Location from "expo-location";
 
 export default function Home() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setState({
+        ...state,
+        pickupCords: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+      });
+    })();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setErrorMsg("Permission to access location was denied");
+          return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        setState({
+          ...state,
+          pickupCords: {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          },
+          droplocationCords: {
+            latitude: -6.374737,
+            longitude: 106.958507,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          },
+        });
+      })();
+    }, 5000);
+    return () => clearInterval(interval);
+  });
+
   const [state, setState] = useState({
     pickupCords: {
       latitude: 30.7046,
@@ -23,13 +78,23 @@ export default function Home() {
     },
   });
 
+  useEffect(() => {}, []);
+
+  // const getLiveLocation = async () => {
+  //   const locPermissionDenied = await locationPermission()
+  //   if (locPermissionDenied) {
+  //     const res = await getCurrentLocation()
+  //     console.log("res =>", res)
+  //   }
+  // }
+
   const mapRef = useRef();
 
   const { pickupCords, droplocationCords } = state;
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <MapView
           ref={mapRef}
           style={StyleSheet.absoluteFill}
@@ -65,9 +130,8 @@ export default function Home() {
       </View>
       <View style={styles.bottomCard}>
         <Text>Where are you going</Text>
-        
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -76,11 +140,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomCard: {
-    backgroundColor: 'white',
-    width: '100%',
-    flex: 1,
+    backgroundColor: "white",
+    width: "100%",
     padding: 30,
-    borderTopEndRadius: 24,
-    borderTopStartRadius: 24
-  }
+  },
 });
