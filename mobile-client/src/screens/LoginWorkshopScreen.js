@@ -34,7 +34,10 @@ export default function LoginWorkshopScreen({ navigation }) {
       const {data: workshop} = await axios.post(url, input)
       // console.log(workshop);
       await storeData('workshop', workshop)
-      navigation.navigate("HomeScreenWorkshop")
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreenWorkshop' }],
+        })
     } catch (err) {
       console.log(err);
     }
