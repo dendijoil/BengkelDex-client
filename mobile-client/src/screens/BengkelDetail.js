@@ -3,13 +3,12 @@ import { HStack, Stack, Text, VStack, Image, Center, ScrollView, Button } from "
 import { useEffect, useState } from "react";
 import { URL } from "../constant/listurl";
 import {mainColor} from "../constant/color";
-export default function BengkelDetail({ route }) {
+export default function BengkelDetail({ route, navigation }) {
   // console.log(route.params.id)
   const [workshopDetail, setWorkshopDetail] = useState(null)
-  // const { data: workshop } = axios({
-  //   method: "GET",
-  //   url: `${URL}/workshops/${route.params.id}`,
-  // })
+  function navigateToChat() {
+    navigation.navigate("Chat")
+  }
 
   useEffect(() => {
     (async () => {
@@ -60,7 +59,7 @@ export default function BengkelDetail({ route }) {
         })}
       </Center>
       <Center>
-        <Button w={"1/4"} backgroundColor={mainColor}>
+        <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToChat} workshop={workshopDetail}>
           <Text>Chat !</Text>
         </Button>
       </Center>
