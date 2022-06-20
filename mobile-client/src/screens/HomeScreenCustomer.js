@@ -7,17 +7,17 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../constant/listurl";
-export default function HomeScreenUser() {
+
+export default function HomeScreenCustomer() {
+
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
   const [customer, setCustomer] = useState({});
   const [token, setToken] = useState({});
 
   const toggleSwitch = () => setIsEnabled(previousState => {
-    // console.log(previousState);
     return !previousState
   });
-  console.log(isEnabled);
 
   const getData = async (key) => {
     try {
@@ -34,7 +34,7 @@ export default function HomeScreenUser() {
         method: "PATCH",
         url: url,
         headers: {
-          token: token
+          access_token: token
         },
         data: {
           status: isEnabled
@@ -52,8 +52,8 @@ export default function HomeScreenUser() {
     })
     statusBroadcast()
   }, [isEnabled])
-  console.log(customer);
-  console.log(token);
+  // console.log(customer);
+  // console.log(token);
   const navigateToMap = () => {
     navigation.navigate("MapScreenCustomer")
   }

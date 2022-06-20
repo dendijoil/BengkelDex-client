@@ -1,4 +1,5 @@
-import { Center, HStack, Text, VStack, Box, Input, Button, Link, Image } from "native-base"
+import { Center, HStack, Text, VStack, Box, Input, Button, Link, Image, IconButton, CloseIcon, Alert, Toast } from "native-base"
+// import { Alert } from "react-native"
 import { mainColor } from "../constant/color"
 import logo from "../images/BengkelDex.png"
 import { useState, useEffect } from "react"
@@ -12,10 +13,6 @@ export default function LoginScreen({ navigation }) {
     password: "",
   })
 
-  useEffect(() => {
-    
-  },[])
-
   const storeData = async (key, value) => {
     try {
       const jsonValue = JSON.stringify(value)
@@ -27,14 +24,39 @@ export default function LoginScreen({ navigation }) {
   
   const loginCustomer = async () => {
     try {
-      // console.log(input)
       const url = URL + '/customers/login'
-      const {data: customer} = await axios.post(url, input)
-      // console.log(customer);
+      const { data: customer } = await axios.post(url, input)
       await storeData('customer', customer)
-      navigation.navigate("HomeScreenCustomer")
+      Toast.show({
+        render: () => {
+          return (
+            <Center>
+              <Box bg="emerald.500" px="2" py="1" rounded="sm" mb={5}>
+                Login Success !
+              </Box>
+            </Center>
+          )
+        }
+      })
+      
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreenCustomer' }],
+      })
     } catch (err) {
+      Toast.show({
+        render: () => {
+          return (
+            <Center>
+              <Box bg="amber.500" px="2" py="1" rounded="sm" mb={5}>
+                Invalid Username or Password !
+              </Box>
+            </Center>
+          )
+        }
+      })
       console.log(err);
+
     }
   }
 
@@ -63,18 +85,18 @@ export default function LoginScreen({ navigation }) {
         </Center>
         <Center>
           <VStack space={'2'} width="4/5">
-            <Input placeholder="Email" 
-            onChangeText={(email) => setInput({...input, email})}
+            <Input placeholder="Email"
+              onChangeText={(email) => setInput({ ...input, email })}
             />
             <Input placeholder="Password" type="password"
-            onChangeText={(password) => setInput({...input, password})}
+              onChangeText={(password) => setInput({ ...input, password })}
             />
             <Button bgColor={mainColor} onPress={loginCustomer} >Continue</Button>
             <Text
               textAlign={"center"}
             >Or Login as a Workshop Owner <Link
-            color={mainColor}
-            onPress={navigateToLoginWorkshop}> Here </Link> </Text>
+              color={mainColor}
+              onPress={navigateToLoginWorkshop}> Here </Link> </Text>
           </VStack>
         </Center>
         <Center mt={10} >
