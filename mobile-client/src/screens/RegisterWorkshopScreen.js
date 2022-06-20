@@ -3,6 +3,7 @@ import { mainColor } from "../constant/color"
 import logo from "../images/BengkelDex.png"
 import { useState } from "react"
 import axios from "axios"
+import { URL } from "../constant/listurl"
 
 export default function LoginScreen({ navigation }) {
 
@@ -16,7 +17,7 @@ export default function LoginScreen({ navigation }) {
   // Kurang di location untuk dikirim ke backend , masukin req.body via input
   const submit = async () => {
     try {
-      const url = "https://e110-180-249-184-49.ap.ngrok.io/workshops/register"
+      const url = URL + "/workshops/register"
       const { data: workshop } = await axios({
         method: "POST",
         url: url,

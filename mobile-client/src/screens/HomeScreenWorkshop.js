@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-
+import { URL } from "../constant/listurl";
 export default function HomeScreenWorkshop() {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -30,7 +30,7 @@ export default function HomeScreenWorkshop() {
   const statusOpen = async () => {
     try {
       toggleSwitch()
-      const url = `https://e110-180-249-184-49.ap.ngrok.io/workshops/${workshop.id}`
+      const url = URL + `/workshops/${workshop.id}`
       const { data: status } = await axios({
         method: "PATCH",
         url: url,

@@ -4,6 +4,7 @@ import logo from "../images/BengkelDex.png"
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios";
+import { URL } from "../constant/listurl"
 
 export default function LoginWorkshopScreen({ navigation }) {
 
@@ -29,7 +30,7 @@ export default function LoginWorkshopScreen({ navigation }) {
   const loginWorkshop = async () => {
     try {
       // console.log(input)
-      const url = 'https://e110-180-249-184-49.ap.ngrok.io/workshops/login'
+      const url = URL + '/workshops/login'
       const {data: workshop} = await axios.post(url, input)
       // console.log(workshop);
       await storeData('workshop', workshop)

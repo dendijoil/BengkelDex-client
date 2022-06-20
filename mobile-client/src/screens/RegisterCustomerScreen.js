@@ -3,6 +3,7 @@ import { mainColor } from "../constant/color"
 import logo from "../images/BengkelDex.png"
 import { useState } from "react"
 import axios from "axios"
+import { URL } from "../constant/listurl"
 export default function LoginScreen({ navigation }) {
 
   const [input, setInput] = useState({
@@ -19,7 +20,7 @@ export default function LoginScreen({ navigation }) {
 
   const submit = async () => {
     try {
-      const url = "https://e110-180-249-184-49.ap.ngrok.io/customers/register"
+      const url = URL + "/customers/register"
       const { data: response } = await axios({
         method: "POST",
         url: url,

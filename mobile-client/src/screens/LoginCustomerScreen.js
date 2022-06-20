@@ -4,6 +4,7 @@ import logo from "../images/BengkelDex.png"
 import { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
+import { URL } from "../constant/listurl"
 export default function LoginScreen({ navigation }) {
 
   const [input, setInput] = useState({
@@ -27,7 +28,7 @@ export default function LoginScreen({ navigation }) {
   const loginCustomer = async () => {
     try {
       // console.log(input)
-      const url = 'https://e110-180-249-184-49.ap.ngrok.io/customers/login'
+      const url = URL + '/customers/login'
       const {data: customer} = await axios.post(url, input)
       // console.log(customer);
       await storeData('customer', customer)

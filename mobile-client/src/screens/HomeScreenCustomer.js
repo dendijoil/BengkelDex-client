@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-
+import { URL } from "../constant/listurl";
 export default function HomeScreenUser() {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -29,7 +29,7 @@ export default function HomeScreenUser() {
   }
   const statusBroadcast = async () => {
     try {
-      const url = 'https://e110-180-249-184-49.ap.ngrok.io/customers/broadcast'
+      const url = URL + '/customers/broadcast'
       const { data: status } = await axios({
         method: "PATCH",
         url: url,
