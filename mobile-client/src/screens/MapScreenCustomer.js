@@ -59,7 +59,7 @@ export default function MapScreenCustomer() {
 
         const { data } = await axios({
           method: "get",
-          url: `${URL}/customers/near-workshops?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}`,
+          url: `${URL}/customers/near-workshop?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}`,
         });
         setWorkshopNear(data);
       } catch (error) {

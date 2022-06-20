@@ -1,13 +1,18 @@
 import { View, StyleSheet, TouchableOpacity, Image, ImageBackground,  } from "react-native";
 import {HStack, Text, Center, VStack, Box} from "native-base"
+import { useNavigation } from "@react-navigation/native";
 
 export default function BengkelCard({workshop}) {
 
+  const navigation = useNavigation()
+
   return (
-    <TouchableOpacity
-        activeOpacity={0.8}
-        >
+
         <HStack space={4} justifyContent={"space-between"} p={3} w={"full"} background="amber.500" rounded={"xl"}>
+              <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate("BengkelDetail", {id: workshop.id})}
+        >
         <HStack space={3}>
           <Center>
             <Box backgroundColor={"amber.200"} rounded={"full"} size={50} p={1}>
@@ -21,10 +26,11 @@ export default function BengkelCard({workshop}) {
             </VStack>
           </Center>
         </HStack>
-        <Center>
-          <Text p={2} >Chat</Text>
+        </TouchableOpacity>
+        <Center >
+          <Text p={2} onPress={() => console.log("to chat")} >Chat</Text>
         </Center>
       </HStack>
-      </TouchableOpacity>
+
   )
 }
