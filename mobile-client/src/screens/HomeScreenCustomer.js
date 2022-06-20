@@ -40,7 +40,7 @@ export default function HomeScreenCustomer() {
           status: isEnabled
         }
       })
-      console.log(status);
+      // console.log(status);
     } catch (err) {
       console.log(err);
     }

@@ -1,4 +1,5 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
+import { Text, Center } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { VStack } from "native-base";
 import MapView, { Marker } from "react-native-maps";
@@ -8,7 +9,7 @@ import axios from "axios";
 import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
-
+import imageMarker from "../images/customMarker.png"
 export default function MapScreenCustomer() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
@@ -73,13 +74,17 @@ export default function MapScreenCustomer() {
   }
 
   return (
-    <SafeAreaView>
-      <VStack space={5} backgroundColor={"red.200"}>
-        <Text>Search for Workshops: </Text>
+      <VStack space={2}>
+        <Center>
+        <Text fontSize={"2xl"} fontWeight={"bold"}>Search for Workshops</Text>
+        </Center>
         <MapView style={{ height: 400 }}>
           <Marker coordinate={currentLoc} />
           {workshopNear.map((location, i) => (
             <Marker
+            title={location.name}
+            description={`${location.address.slice(0,20)}...`}
+            image={imageMarker}
               coordinate={{
                 latitude: location.location.coordinates[1],
                 longitude: location.location.coordinates[0],
@@ -104,6 +109,5 @@ export default function MapScreenCustomer() {
           />
         </View>
       </VStack>
-    </SafeAreaView>
   );
 }
