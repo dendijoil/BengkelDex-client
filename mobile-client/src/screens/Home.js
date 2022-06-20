@@ -6,7 +6,7 @@ import MapViewDirections from "react-native-maps-directions";
 import imagePath from "../constants/imagePath";
 import * as Location from "expo-location";
 
-export default function Home() {
+export default function Home({route}) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
