@@ -5,7 +5,9 @@ import { mainColor } from "../constant/color";
 export default function BengkelCard({ workshop }) {
 
   const navigation = useNavigation()
-
+  function navigateToChat() {
+    navigation.navigate("ChatScreen", { id: workshop.id })
+  }
   return (
 
     <HStack space={4} justifyContent={"space-between"} p={3} w={"full"} background={mainColor} rounded={"xl"}>
@@ -27,7 +29,7 @@ export default function BengkelCard({ workshop }) {
       </TouchableOpacity>
       <Center >
         <Button rounded={'md'} backgroundColor={"green.300"}>
-          <Text onPress={() => console.log(workshop)} >Chat me !</Text>
+          <Text onPress={navigateToChat} >Chat me !</Text>
         </Button>
       </Center>
     </HStack>

@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import BengkelDetail from '../screens/BengkelDetail';
+import ChatScreen from '../screens/ChatScreen';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -41,6 +42,7 @@ export default function StackNavigator() {
 
         <Stack.Screen name="MapScreenCustomer" component={MapScreenCustomer} />
         <Stack.Screen name="BengkelDetail" component={BengkelDetail} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
