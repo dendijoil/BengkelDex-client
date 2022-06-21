@@ -18,6 +18,7 @@ import MapScreenWorkshop from '../screens/MapScreenWorkshop';
 import ChatScreen from '../screens/ChatScreen';
 import ChatList from '../screens/ChatList';
 import LiveLocation from '../screens/LiveLocation';
+import TopUpScreen from '../screens/TopUpScreen';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -49,6 +50,7 @@ export default function StackNavigator() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="ChatList" component={ChatList} />
         <Stack.Screen name="LiveLocation" component={LiveLocation} />
+        <Stack.Screen name="TopUpCustomer" component={TopUpScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

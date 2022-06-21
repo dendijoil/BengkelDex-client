@@ -5,19 +5,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
-
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [customer, setCustomer] = useState({});
 
   const getData = async (key) => {
     try {
-      const jsonValue = await AsyncStorage.getItem(`@${key}`)
+      const jsonValue = await AsyncStorage.getItem(`@${key}`);
       console.log(jsonValue);
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch (e) {
       console.log(e);
     }
-  }
+  };
+
+  const topUp = async () => {
+    try {
+      navigation.navigate("TopUpCustomer");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const logout = async () => {
     try {
@@ -28,65 +35,62 @@ export default function Profile() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
-    const customerStorage = getData("customer").then(res => {
+    const customerStorage = getData("customer").then((res) => {
       console.log(res);
-      setCustomer(res.payload)
-    })
-  }, [])
+      setCustomer(res.payload);
+    });
+  }, []);
 
   return (
     <SafeAreaView>
       <VStack space={5}>
         <Center>
-          <Text fontSize={"2xl"} >Profile</Text>
+          <Text fontSize={"2xl"}>Profile</Text>
         </Center>
         <Center>
-          <Image size={100} borderRadius={"full"} source={{ uri: "https://media-exp2.licdn.com/dms/image/C5103AQFb3SSll63O9g/profile-displayphoto-shrink_800_800/0/1548945277576?e=1661385600&v=beta&t=nUHcnAezfb0SSst5nOlOrGR3HxjKVr35uezUz3j-8Ho" }} alt={"Logo"} />
+          <Image
+            size={100}
+            borderRadius={"full"}
+            source={{
+              uri: "https://media-exp2.licdn.com/dms/image/C5103AQFb3SSll63O9g/profile-displayphoto-shrink_800_800/0/1548945277576?e=1661385600&v=beta&t=nUHcnAezfb0SSst5nOlOrGR3HxjKVr35uezUz3j-8Ho",
+            }}
+            alt={"Logo"}
+          />
         </Center>
         <VStack ml={4}>
-          <Text fontSize={"2xl"}>
-            Username:
-          </Text>
+          <Text fontSize={"2xl"}>Username:</Text>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {customer.name}
           </Text>
         </VStack>
         <VStack ml={4}>
-          <Text fontSize={"2xl"}>
-            Email:
-          </Text>
+          <Text fontSize={"2xl"}>Email:</Text>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {customer.email}
           </Text>
         </VStack>
         <VStack ml={4}>
-          <Text fontSize={"2xl"}>
-            Address:
-          </Text>
+          <Text fontSize={"2xl"}>Address:</Text>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {customer.address}
           </Text>
         </VStack>
         <VStack ml={4}>
-          <Text fontSize={"2xl"}>
-            Balance:
-          </Text>
+          <Text fontSize={"2xl"}>Balance:</Text>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {customer.balance} DexCoin
           </Text>
         </VStack>
         <HStack justifyContent={"space-between"}>
-          <Button w={"1/4"} >
+          <Button w={"1/4"} onPress={topUp}>
             TOPUP
           </Button>
-          <Button onPress={logout}>
-            LOG OUT
-          </Button>
+          <Button onPress={logout}>LOG OUT</Button>
         </HStack>
       </VStack>
     </SafeAreaView>
-  )
-};
+  );
+}
