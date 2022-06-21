@@ -1,11 +1,12 @@
-import { VStack, ScrollView, Center, Box, CheckIcon, HStack, Image, Text, Input, Checkbox, Select } from "native-base"
+import { VStack, ScrollView, Center, Box, CheckIcon, HStack, Image, Text, Input, Checkbox, Select, Button } from "native-base"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useIsFocused } from "@react-navigation/native";
 import { URL } from "../constant/listurl";
 import axios from "axios";
+import LoadingMap from "../components/LoadingMap";
+import { useIsFocused } from "@react-navigation/native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -18,15 +19,14 @@ const getData = async () => {
   }
 }
 
-export default function AddOrderScreens() {
+export default function AddOrderScreens({ navigation }) {
   const isFocused = useIsFocused();
   const [services, setServices] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [groupValues, setGroupValues] = useState([]);
-  // const [workshop, setWorkshop] = useState({})
-  // const [token, setToken] = useState({})
+  const [checkedState, setCheckedState] = useState([])
+  const [paymentType, setPaymentType] = useState("")
+  const [username, setUsername] = useState("")
 
-  console.log("masuk");
   useEffect(() => {
     (async () => {
       try {
@@ -41,39 +41,64 @@ export default function AddOrderScreens() {
         console.log(err);
       }
     })()
-  }, [])
+  }, [isFocused])
 
+  let checked = []
 
-  const handleChange = (id) => {
-    // if(!temp.includes(id)){
-    //   temp.push(id)
-    // } else {
-    //   temp.filter(item => item !== id)
-    // }
-    // console.log(temp);
-    console.log(id);
+  const handleChange = (index, id, e) => {
+    if (checked.length === 0) {
+      checked.push(id)
+    } else if (!checked.includes(id)) {
+      checked.push(id)
+    } else if (checked.includes(id)) {
+      checked = checked.filter(item => item !== id)
+    }
+    setCheckedState(checked)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const input = {
+        services: checkedState,
+        paymentType: paymentType,
+        username: username,
+      }
+      const storage = await getData()
+      const { data: response } = await axios({
+        method: "POST",
+        url: URL + `/orders/${storage.payload.id}`,
+        headers: {
+          access_token: storage.token
+        },
+        data: input
+      })
+      console.log(navigation.navigate("HomePage"));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   if (isLoading) {
-    return <Text>Loading..</Text>
+    return <LoadingMap/>
   }
   return (
 
     <SafeAreaView>
       <Text>Create Order Form</Text>
       <VStack>
-        <Input placeholder="Username"></Input>
+        <Input onChangeText={(e) => setUsername(e)}></Input>
         <Text>Order date: {new Date().toISOString().slice(0, 10)}</Text>
         <HStack>
           <Text>
             Payment Type
           </Text>
-          <Select minWidth="200" accessibilityLabel="Choose Payment Type" placeholder="Choose Payment Type" >
+          <Select onValueChange={(e) => {
+            setPaymentType(e)
+          }} minWidth="200" accessibilityLabel="Choose Payment Type" placeholder="Choose Payment Type" >
             <Select.Item label="Cash" value="cash" />
             <Select.Item label="Balance" value="balance" />
           </Select>
-
-
         </HStack>
         <ScrollView maxW="300" h="80" _contentContainerStyle={{
           px: "20px",
@@ -81,25 +106,22 @@ export default function AddOrderScreens() {
           minW: "72"
         }} backgroundColor={'coolGray.300'}>
           <VStack space={3}>
-            <Checkbox.Group onChange={setGroupValues} value={groupValues} accessibilityLabel="choose numbers">
-              {services.map((service, index) => {
-                return (
-                  <Checkbox value={service.id}>
-                    {/* {service.name} */}
-                    <HStack justifyContent={"space-between"}>
-                      <Text>{service.name}</Text>
-                      
-                        <Text>{service.price}</Text>
-                      
-                    </HStack>
-                  </Checkbox>
-                  // <Box key={index} backgroundColor={"white"} rounded={'md'} p={1} pl={3}>
-                  // </Box>
-                )
-              })}
-            </Checkbox.Group>
+            {services.map((service, index) => {
+              return (
+                <Checkbox key={index} value={service.id}
+                  onChange={(e) => {
+                    handleChange(index, service.id, e)
+                  }}>
+                  <HStack justifyContent={"space-between"}>
+                    <Text>{service.name}</Text>
+                    <Text>{service.price}</Text>
+                  </HStack>
+                </Checkbox>
+              )
+            })}
           </VStack>
         </ScrollView>
+        <Button onPress={handleSubmit}>SUBMIT</Button>
       </VStack>
 
     </SafeAreaView>
