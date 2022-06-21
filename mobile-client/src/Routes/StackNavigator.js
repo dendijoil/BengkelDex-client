@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import BengkelDetail from '../screens/BengkelDetail';
+import MapScreenWorkshop from '../screens/MapScreenWorkshop';
 import ChatScreen from '../screens/ChatScreen';
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export default function StackNavigator() {
         <Stack.Screen options={{ headerShown: false }} name="RegisterWorkshop" component={RegisterWorkshopScreen} />
 
         <Stack.Screen name="MapScreenCustomer" component={MapScreenCustomer} />
+        <Stack.Screen name="MapScreenWorkshop" component={MapScreenWorkshop} />
         <Stack.Screen name="BengkelDetail" component={BengkelDetail} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
 
