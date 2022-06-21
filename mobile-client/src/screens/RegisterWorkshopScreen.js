@@ -1,11 +1,28 @@
 import { Center, HStack, Text, VStack, Box, Input, Button, Link, Image } from "native-base"
 import { mainColor } from "../constant/color"
 import logo from "../images/BengkelDex.png"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { URL } from "../constant/listurl"
+import * as Location from 'expo-location';
+
 
 export default function LoginScreen({ navigation }) {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   const [input, setInput] = useState({
     name: "",
@@ -27,8 +44,8 @@ export default function LoginScreen({ navigation }) {
           password: input.password,
           phoneNumber: input.phoneNumber,
           address: input.address,
-          latitude: "",
-          longitude: "",
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
         }
       })
       console.log(workshop)

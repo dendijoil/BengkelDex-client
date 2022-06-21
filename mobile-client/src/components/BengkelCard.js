@@ -13,7 +13,7 @@ export default function BengkelCard({ workshop }) {
     <HStack space={4} justifyContent={"space-between"} p={3} w={"full"} background={mainColor} rounded={"xl"}>
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate("BengkelDetail", { id: workshop.id })}
+        onPress={() => navigation.navigate("BengkelDetail", { id: workshop.id, data: workshop })}
       >
         <HStack space={3}>
           <Center>

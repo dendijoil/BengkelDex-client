@@ -1,4 +1,4 @@
-import { Text, Button } from "native-base"
+import { Text, Button, View } from "native-base"
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function LandingPageScreens({ navigation }) {
@@ -11,6 +11,15 @@ export default function LandingPageScreens({ navigation }) {
 
   const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
   const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
+
+  if (user) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
+
   if (user) {
     navigation.navigate("HomeScreenCustomer");
   } else if(workshop) {

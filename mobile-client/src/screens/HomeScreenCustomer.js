@@ -7,8 +7,25 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../constant/listurl";
+import * as Location from 'expo-location';
 
 export default function HomeScreenCustomer() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -39,8 +56,8 @@ export default function HomeScreenCustomer() {
         },
         data: {
           status: isEnabled,
-          latitude: -6.914744,
-          longitude: 107.609810
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
         }
       })
       // console.log(status);

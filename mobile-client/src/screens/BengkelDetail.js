@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import { URL } from "../constant/listurl";
 import {mainColor} from "../constant/color";
 export default function BengkelDetail({ route, navigation }) {
-  // console.log(route.params.id)
+  console.log(route.params.data)
   const [workshopDetail, setWorkshopDetail] = useState(null)
   function navigateToChat() {
-    navigation.navigate("Chat")
+    navigation.navigate("ChatScreen", { id: route.params.id, data: route.params.data })
+  }
+
+  function navigateToLiveLocation() {
+    navigation.navigate("LiveLocation", {data: workshopDetail})
   }
 
   useEffect(() => {
@@ -61,6 +65,9 @@ export default function BengkelDetail({ route, navigation }) {
       <Center>
         <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToChat} workshop={workshopDetail}>
           <Text>Chat !</Text>
+        </Button>
+        <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToLiveLocation} workshop={workshopDetail}>
+          <Text>Navigation</Text>
         </Button>
       </Center>
     </VStack>

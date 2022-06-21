@@ -16,10 +16,10 @@ const getData = async (key) => {
 }
 
 export default function ChatScreen({ route }) {
-
+  console.log(route)
   const [sender, setSender] = useState({});
   const [reciver, setReciver] = useState({});
-  console.log(route.params.data);
+  // console.log(route.params.data);
   useEffect(() => {
     (async () => {
       try {
@@ -28,7 +28,7 @@ export default function ChatScreen({ route }) {
         if(!data){
           const workshop = await getData("workshop")
           setSender(workshop.payload)
-          console.log(sender, '<<>>');
+          // console.log(sender, '<<>>');
         } else {
           setSender(data.payload)
         }
@@ -40,8 +40,8 @@ export default function ChatScreen({ route }) {
   }, [])
 
   
-  // console.log(sender.TalkJSID, 'sendersssssss');
-  // console.log(reciver.TalkJSID, 'reciversssssss');
+  console.log(sender.TalkJSID, 'sendersssssss');
+  console.log(reciver.TalkJSID, 'reciversssssss');
   if (!sender.TalkJSID) {
     return <Text>Loading..</Text>
   }

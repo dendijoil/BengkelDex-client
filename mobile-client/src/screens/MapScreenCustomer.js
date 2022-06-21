@@ -10,6 +10,8 @@ import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
 import imageMarker from "../images/customMarker.png"
+import LoadingMap from "../components/LoadingMap"
+
 export default function MapScreenCustomer() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
@@ -70,7 +72,7 @@ export default function MapScreenCustomer() {
   }, []);
   
   if (workshopNear === null) {
-    return <Text>Loading Map...</Text>;
+    return <LoadingMap></LoadingMap>
   }
 
   return (
