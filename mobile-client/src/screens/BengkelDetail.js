@@ -9,9 +9,9 @@ export default function BengkelDetail({ route, navigation }) {
   function navigateToChat() {
     navigation.navigate("ChatScreen", { id: route.params.id, data: route.params.data })
   }
-  function navigateToChatList() {
-    navigation.navigate("ChatList", { id: route.params.id, data: route.params.data })
-  }
+  // function navigateToChatList() {
+  //   navigation.navigate("ChatList", { id: route.params.id, data: route.params.data })
+  // }
 
   function navigateToLiveLocation() {
     navigation.navigate("LiveLocation", {data: workshopDetail})

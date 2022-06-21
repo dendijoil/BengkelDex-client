@@ -16,17 +16,17 @@ const getData = async (key) => {
   }
 }
 
-export default function ChatList({ route }) {
+export default function ChatList() {
 
-  console.log(route)
+  // console.log(navigate)
   const navigation = useNavigation()
   const [sender, setSender] = useState({});
-  const [reciver, setReciver] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  // const [reciver, setReciver] = useState({});
   // console.log(route.params.data);
   useEffect(() => {
     (async () => {
       try {
-
         const data = await getData("customer")
         if(!data){
           const workshop = await getData("workshop")
@@ -35,7 +35,8 @@ export default function ChatList({ route }) {
         } else {
           setSender(data.payload)
         }
-        setReciver(route.params.data)
+        setIsLoading(false)
+        // setReciver(route.params.data)
       } catch (err) {
         console.log(err);
       }
@@ -43,14 +44,14 @@ export default function ChatList({ route }) {
   }, [])
 
   
-  // console.log(sender.TalkJSID, 'sendersssssss');
+  console.log(sender.TalkJSID, 'sendersssssss');
   // console.log(reciver.TalkJSID, 'reciversssssss');
-  if (!sender.TalkJSID) {
+  if (isLoading) {
     return <Text>Loading..</Text>
   }
-  if (!reciver.TalkJSID) {
-    return <Text>Loading reciver</Text>
-  }
+  // if (!reciver.TalkJSID) {
+  //   return <Text>Loading reciver</Text>
+  // }
 
 
   const me = {
@@ -64,7 +65,7 @@ export default function ChatList({ route }) {
 
   function navigateToChat(props) {
     console.log(props.others[0].id, "<<<<<<<")
-    navigation.navigate("ChatScreen", { id: route.params.id, data: {
+    navigation.navigate("ChatScreen", { id: sender.id, data: {
       TalkJSID: props.others[0].id,
       name: props.others[0].name,
       imgUrl: props.others[0].photoUrl
