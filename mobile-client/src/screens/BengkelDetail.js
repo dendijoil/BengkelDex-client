@@ -9,6 +9,9 @@ export default function BengkelDetail({ route, navigation }) {
   function navigateToChat() {
     navigation.navigate("ChatScreen", { id: route.params.id, data: route.params.data })
   }
+  function navigateToChatList() {
+    navigation.navigate("ChatList", { id: route.params.id, data: route.params.data })
+  }
 
   function navigateToLiveLocation() {
     navigation.navigate("LiveLocation", {data: workshopDetail})
@@ -65,6 +68,9 @@ export default function BengkelDetail({ route, navigation }) {
       <Center>
         <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToChat} workshop={workshopDetail}>
           <Text>Chat !</Text>
+        </Button>
+        <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToChatList} workshop={workshopDetail}>
+          <Text>List !</Text>
         </Button>
         <Button w={"1/4"} backgroundColor={mainColor} onPress={navigateToLiveLocation} workshop={workshopDetail}>
           <Text>Navigation</Text>

@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native';
 import { useEffect, useState } from 'react';
 import { URL } from '../constant/listurl';
+import { useNavigation } from '@react-navigation/native';
 
 const getData = async (key) => {
   try {
@@ -15,13 +16,13 @@ const getData = async (key) => {
   }
 }
 
-export default function ChatScreen({ route }) {
-  
-  // console.log(route)
+export default function ChatList({ route }) {
+
+  console.log(route)
+  const navigation = useNavigation()
   const [sender, setSender] = useState({});
   const [reciver, setReciver] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  console.log(route.params.data, "<<<<<<<");
+  // console.log(route.params.data);
   useEffect(() => {
     (async () => {
       try {
@@ -35,7 +36,6 @@ export default function ChatScreen({ route }) {
           setSender(data.payload)
         }
         setReciver(route.params.data)
-        setIsLoading(false)
       } catch (err) {
         console.log(err);
       }
@@ -45,8 +45,10 @@ export default function ChatScreen({ route }) {
   
   // console.log(sender.TalkJSID, 'sendersssssss');
   // console.log(reciver.TalkJSID, 'reciversssssss');
-
-  if (isLoading) {
+  if (!sender.TalkJSID) {
+    return <Text>Loading..</Text>
+  }
+  if (!reciver.TalkJSID) {
     return <Text>Loading reciver</Text>
   }
 
@@ -59,29 +61,19 @@ export default function ChatScreen({ route }) {
     welcomeMessage: 'Hey there! How are you? :-)',
     role: 'default',
   };
-  //untuk test, id other "testingya"
-  let other = {
-    id: reciver.TalkJSID,
-    name: reciver.name,
-    email: 'Sebastian@example.com',
-    photoUrl: reciver.imgUrl,
-    welcomeMessage: `Hallo ..`,
-    role: 'default',
-  };
-  if(reciver.role === 'staff'){
-    other.welcomeMessage = `Haii ${sender.name}, ada yang bisa di bantu ?`
+
+  function navigateToChat(props) {
+    console.log(props.others[0].id, "<<<<<<<")
+    navigation.navigate("ChatScreen", { id: route.params.id, data: {
+      TalkJSID: props.others[0].id,
+      name: props.others[0].name,
+      imgUrl: props.others[0].photoUrl
+    }})
   }
-
-  const conversationBuilder = TalkRn.getConversationBuilder(
-    TalkRn.oneOnOneId(me, other)
-  );
-
-  conversationBuilder.setParticipant(me);
-  conversationBuilder.setParticipant(other);
 
   return (
     <TalkRn.Session appId='t3Kyi1jS' me={me}>
-      <TalkRn.Chatbox conversationBuilder={conversationBuilder} />
+      <TalkRn.ConversationList onSelectConversation={navigateToChat} />
     </TalkRn.Session>
   );
 

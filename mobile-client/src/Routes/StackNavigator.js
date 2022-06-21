@@ -16,16 +16,17 @@ import { useNavigation } from '@react-navigation/native';
 import BengkelDetail from '../screens/BengkelDetail';
 import MapScreenWorkshop from '../screens/MapScreenWorkshop';
 import ChatScreen from '../screens/ChatScreen';
+import ChatList from '../screens/ChatList';
 import LiveLocation from '../screens/LiveLocation';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
 
-  // const [user, setUser] = useState(null);
-  // const [workshop, setWorkshop] = useState(null);
+  const [user, setUser] = useState(null);
+  const [workshop, setWorkshop] = useState(null);
 
-  // const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
-  // const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
+  const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
+  const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
 
   return (
     <NavigationContainer>
@@ -46,6 +47,7 @@ export default function StackNavigator() {
         <Stack.Screen name="MapScreenWorkshop" component={MapScreenWorkshop} />
         <Stack.Screen name="BengkelDetail" component={BengkelDetail} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="ChatList" component={ChatList} />
         <Stack.Screen name="LiveLocation" component={LiveLocation} />
 
       </Stack.Navigator>
