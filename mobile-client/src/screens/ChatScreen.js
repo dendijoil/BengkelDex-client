@@ -19,31 +19,20 @@ export default function ChatScreen({ route }) {
 
   const [sender, setSender] = useState({});
   const [reciver, setReciver] = useState({});
-
+  console.log(route.params.data);
   useEffect(() => {
     (async () => {
       try {
-        let condition;
+
         const data = await getData("customer")
-        if(data.payload.role === "customer"){
-          condition = 'workshops'
-        } else {
-          condition = 'customers'
-        }
         if(!data){
-          console.log('fetch wkshp');
           const workshop = await getData("workshop")
-          setSender(workshop)
+          setSender(workshop.payload)
+          console.log(sender, '<<>>');
+        } else {
+          setSender(data.payload)
         }
-
-        const {data: reciv} = await axios({
-          method: "get",
-          url: `${URL}/${condition}/${route.params.id}`,
-        })
-
-        setReciver(reciv)
-        setSender(data.payload)
-
+        setReciver(route.params.data)
       } catch (err) {
         console.log(err);
       }
@@ -51,7 +40,7 @@ export default function ChatScreen({ route }) {
   }, [])
 
   
-  // console.log(sender, 'sendersssssss');
+  // console.log(sender.TalkJSID, 'sendersssssss');
   // console.log(reciver.TalkJSID, 'reciversssssss');
   if (!sender.TalkJSID) {
     return <Text>Loading..</Text>
@@ -62,22 +51,25 @@ export default function ChatScreen({ route }) {
 
 
   const me = {
-    id: '11111111111',
+    id: sender.TalkJSID,
     name: sender.name,
     email: 'alice@example.com',
-    photoUrl: 'https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg',
+    photoUrl: sender.imgUrl,
     welcomeMessage: 'Hey there! How are you? :-)',
     role: 'default',
   };
-
-  const other = {
-    id: '222222222',
+  //untuk test, id other "testingya"
+  let other = {
+    id: reciver.TalkJSID,
     name: reciver.name,
     email: 'Sebastian@example.com',
-    photoUrl: 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
-    welcomeMessage: `Hallo ${sender.name}! Selamat datang di ${reciver.name} :) . Ada yang bisa di bantu ?`,
+    photoUrl: reciver.imgUrl,
+    welcomeMessage: `Hallo ..`,
     role: 'default',
   };
+  if(reciver.role === 'staff'){
+    other.welcomeMessage = `Haii ${sender.name}, ada yang bisa di bantu ?`
+  }
 
   const conversationBuilder = TalkRn.getConversationBuilder(
     TalkRn.oneOnOneId(me, other)
