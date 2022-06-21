@@ -6,7 +6,7 @@ export default function BengkelCard({ workshop }) {
 
   const navigation = useNavigation()
   function navigateToChat() {
-    navigation.navigate("ChatScreen", { id: workshop.id })
+    navigation.navigate("ChatScreen", { id: workshop.id, data: workshop })
   }
   return (
 

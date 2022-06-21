@@ -21,7 +21,15 @@ export default function LoginScreen({ navigation }) {
       const { data: workshop } = await axios({
         method: "POST",
         url: url,
-        data: input
+        data: {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+          phoneNumber: input.phoneNumber,
+          address: input.address,
+          latitude: "",
+          longitude: "",
+        }
       })
       console.log(workshop)
       navigation.navigate("LoginWorkshop")

@@ -27,6 +27,7 @@ export default function HomeScreenCustomer() {
       console.log(e);
     }
   }
+  // location masih hardcode
   const statusBroadcast = async () => {
     try {
       const url = URL + '/customers/broadcast'
@@ -37,7 +38,9 @@ export default function HomeScreenCustomer() {
           access_token: token
         },
         data: {
-          status: isEnabled
+          status: isEnabled,
+          latitude: -6.914744,
+          longitude: 107.609810
         }
       })
       // console.log(status);
@@ -52,8 +55,7 @@ export default function HomeScreenCustomer() {
     })
     statusBroadcast()
   }, [isEnabled])
-  // console.log(customer);
-  // console.log(token);
+
   const navigateToMap = () => {
     navigation.navigate("MapScreenCustomer")
   }
@@ -63,7 +65,7 @@ export default function HomeScreenCustomer() {
         <VStack space={5}>
           <Box mt={5} backgroundColor={mainColor}>
             <HStack justifyContent={"space-between"} >
-              <Image size={50} borderRadius={"full"} source={{uri:"https://media-exp2.licdn.com/dms/image/C5103AQFb3SSll63O9g/profile-displayphoto-shrink_800_800/0/1548945277576?e=1661385600&v=beta&t=nUHcnAezfb0SSst5nOlOrGR3HxjKVr35uezUz3j-8Ho"}} alt={"Logo"} />
+              <Image size={50} borderRadius={"full"} source={{ uri: customer.imgUrl }} alt={"Logo"} />
               <VStack ml={"-110px"}>
                 <Text fontWeight={"bold"} >Haii {customer.name}</Text>
                 <Text fontWeight={"bold"} >Your Balance : {customer.balance} DexCoin</Text>

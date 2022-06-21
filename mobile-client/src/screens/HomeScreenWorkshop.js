@@ -46,6 +46,9 @@ export default function HomeScreenWorkshop() {
       console.log(err);
     }
   }
+  const navigateToMap = () => {
+    navigation.navigate("MapScreenWorkshop")
+  }
 
   useEffect(() => {
     const workshopStorage = getData("workshop").then(res => {
@@ -94,7 +97,7 @@ export default function HomeScreenWorkshop() {
             <Text fontSize={'2xl'} fontWeight={"bold"}>OR</Text>
           </Center>
           <Center>
-            <Button rounded={"3xl"} w="2/3" backgroundColor={secondaryColor}>
+            <Button onPress={navigateToMap} rounded={"3xl"} w="2/3" backgroundColor={secondaryColor}>
               <Text>Check customer near you !</Text>
             </Button>
           </Center>
