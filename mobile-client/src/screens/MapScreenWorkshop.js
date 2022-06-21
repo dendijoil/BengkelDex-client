@@ -10,10 +10,12 @@ import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
 import imageMarker from "../images/customMarker.png"
+import LoadingMap from "../components/LoadingMap";
+import { useIsFocused } from "@react-navigation/native";
 export default function MapScreenWorkshop() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
-
+  const isFocused = useIsFocused();
   const renderItem = ({ item }) => <BengkelCard workshop={item} />;
 
   const getData = async (key) => {
@@ -67,10 +69,10 @@ export default function MapScreenWorkshop() {
         console.log(error);
       }
     })();
-  }, []);
+  }, [isFocused]);
   
   if (workshopNear === null) {
-    return <Text>Loading Map...</Text>;
+    return <LoadingMap/>
   }
 
   return (
