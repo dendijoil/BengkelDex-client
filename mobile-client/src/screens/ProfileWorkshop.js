@@ -8,11 +8,11 @@ export default function ProfileWorkshop() {
 
   const navigation = useNavigation()
   const [workshop, setWorkshop] = useState({});
-
+  const [token, setToken] = useState({});
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(`@${key}`)
-      console.log(jsonValue);
+      // console.log(jsonValue);
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch (e) {
       console.log(e);
@@ -30,10 +30,16 @@ export default function ProfileWorkshop() {
     }
   }
 
+  const navigateToListOrder = () => {
+    // console.log(token);
+    navigation.navigate("ListOrder", {id: workshop.id, token: token, payload: workshop})
+  }
+
   useEffect(() => {
     const workshopStorage = getData("workshop").then(res => {
-      console.log(res);
+      // console.log(res);
       setWorkshop(res.payload)
+      setToken(res.token)
     })
   }, [])
 
@@ -44,7 +50,7 @@ export default function ProfileWorkshop() {
           <Text fontSize={"2xl"} >Profile</Text>
         </Center>
         <Center>
-          <Image size={100} borderRadius={"full"} source={{ uri: "https://media-exp2.licdn.com/dms/image/C5103AQFb3SSll63O9g/profile-displayphoto-shrink_800_800/0/1548945277576?e=1661385600&v=beta&t=nUHcnAezfb0SSst5nOlOrGR3HxjKVr35uezUz3j-8Ho" }} alt={"Logo"} />
+          <Image size={100} borderRadius={"full"} source={{ uri: workshop.imgUrl }} alt={"Logo"} />
         </Center>
         <VStack ml={4}>
           <Text fontSize={"2xl"}>
@@ -81,6 +87,11 @@ export default function ProfileWorkshop() {
         <HStack justifyContent={"space-between"}>
           <Button onPress={logout}>
             LOG OUT
+          </Button>
+          <Button
+          onPress={navigateToListOrder}
+          >
+            LIST ORDER
           </Button>
         </HStack>
       </VStack>
