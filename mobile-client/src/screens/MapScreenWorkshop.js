@@ -10,7 +10,7 @@ import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
 import imageMarker from "../images/customMarker.png"
-export default function MapScreenCustomer() {
+export default function MapScreenWorkshop() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
 
