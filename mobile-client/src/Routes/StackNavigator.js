@@ -22,6 +22,8 @@ import OrderDetailScreen from '../screens/OrderDetailScreen';
 import BarcodeScreen from '../screens/BarcodeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import { useFocusEffect } from "@react-navigation/native";
+import TopUpScreen from '../screens/TopUpScreen';
+import PaymentTopUpScreen from '../screens/PaymentTopUpScreen';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -74,8 +76,8 @@ export default function StackNavigator() {
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} />
         <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetailScreen} />
-
-
+        <Stack.Screen options={{headerShown: false}} name="TopUpScreen" component={TopUpScreen} />
+        <Stack.Screen name="PaymentTopUpScreen" component={PaymentTopUpScreen} />
       </Stack.Navigator>
   )
 }
