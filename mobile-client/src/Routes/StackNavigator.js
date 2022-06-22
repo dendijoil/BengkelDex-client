@@ -64,15 +64,15 @@ export default function StackNavigator() {
         <Stack.Screen options={{ headerShown: false }} name="RegisterCustomer" component={RegisterCustomerScreen} />
         <Stack.Screen options={{ headerShown: false }} name="RegisterWorkshop" component={RegisterWorkshopScreen} />
 
-        <Stack.Screen name="MapScreenCustomer" component={MapScreenCustomer} />
-        <Stack.Screen name="MapScreenWorkshop" component={MapScreenWorkshop} />
+        <Stack.Screen options={{ headerShown: false }} name="MapScreenCustomer" component={MapScreenCustomer} />
+        <Stack.Screen options={{ headerShown: false }} name="MapScreenWorkshop" component={MapScreenWorkshop} />
         <Stack.Screen name="BengkelDetail" component={BengkelDetail} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="ChatList" component={ChatList} />
+        <Stack.Screen options={{ headerShown: false }} name="ChatList" component={ChatList} />
         <Stack.Screen name="LiveLocation" component={LiveLocation} />
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} />
+        <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} /> 
         <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetailScreen} />
 
 

@@ -3,15 +3,17 @@ import { HStack, Stack, Text, VStack, Image, Center, ScrollView, Button } from "
 import { useEffect, useState } from "react";
 import { URL } from "../constant/listurl";
 import {mainColor} from "../constant/color";
+import LoadingAll from "../components/LoadingAll";
 export default function BengkelDetail({ route, navigation }) {
   console.log(route.params.data)
   const [workshopDetail, setWorkshopDetail] = useState(null)
   function navigateToChat() {
     navigation.navigate("ChatScreen", { id: route.params.id, data: route.params.data })
   }
-  // function navigateToChatList() {
-  //   navigation.navigate("ChatList", { id: route.params.id, data: route.params.data })
-  // }
+  
+  function navigateToChatList() {
+    navigation.navigate("ChatList", { id: route.params.id, data: route.params.data })
+  }
 
   function navigateToLiveLocation() {
     navigation.navigate("LiveLocation", {data: workshopDetail})
@@ -33,7 +35,7 @@ export default function BengkelDetail({ route, navigation }) {
   }, [])
 
   if (workshopDetail === null) {
-    return <Text>Loading ....</Text>
+    return <LoadingAll></LoadingAll>
   }
   return (
     <VStack space={5}>
