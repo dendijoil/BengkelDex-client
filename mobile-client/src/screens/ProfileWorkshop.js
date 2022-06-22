@@ -24,7 +24,7 @@ export default function ProfileWorkshop() {
       await AsyncStorage.removeItem("@workshop");
       await AsyncStorage.removeItem("@token");
       console.log("logout");
-      navigation.replace("LandingPageScreens");
+      navigation.replace("LoginCustomer");
     } catch (e) {
       console.log(e);
     }
