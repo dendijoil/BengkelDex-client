@@ -79,7 +79,7 @@ export default function Profile() {
           </Text>
         </VStack>
         <HStack justifyContent={"space-between"}>
-          <Button w={"1/4"} >
+          <Button w={"1/4"} onPress={()=> {navigation.navigate("TopUpScreen")}}>
             TOPUP
           </Button>
           <Button onPress={logout}>
