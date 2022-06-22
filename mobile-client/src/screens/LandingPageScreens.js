@@ -1,9 +1,8 @@
 import { Text, Button, View } from "native-base"
 import { useCallback, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingMap from "../components/LoadingMap";
-import { useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import LoadingAll from "../components/LoadingAll";
 // import { useIsFocused } from "@react-navigation/native";
 export default function LandingPageScreens({ navigation }) {
   const [user, setUser] = useState(null);
@@ -38,7 +37,7 @@ export default function LandingPageScreens({ navigation }) {
   return (
 
     <>
-      <LoadingMap></LoadingMap>
+      <LoadingAll></LoadingAll>
     </>
 
   )

@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from "react-native";
 import { Box, Center, VStack, Text } from 'native-base';
 import { mainColor } from '../constant/color';
+import LoadingAll from '../components/LoadingAll';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -51,13 +52,9 @@ export default function ChatList() {
 
 
   console.log(sender.TalkJSID, 'sendersssssss');
-  // console.log(reciver.TalkJSID, 'reciversssssss');
   if (isLoading) {
-    return <Text>Loading..</Text>
+    return <LoadingAll></LoadingAll>
   }
-  // if (!reciver.TalkJSID) {
-  //   return <Text>Loading reciver</Text>
-  // }
 
 
   const me = {

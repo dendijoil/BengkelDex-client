@@ -22,6 +22,8 @@ import OrderDetailScreen from '../screens/OrderDetailScreen';
 import BarcodeScreen from '../screens/BarcodeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import { useFocusEffect } from "@react-navigation/native";
+import TopUpScreen from '../screens/TopUpScreen';
+import PaymentTopUpScreen from '../screens/PaymentTopUpScreen';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -64,18 +66,18 @@ export default function StackNavigator() {
         <Stack.Screen options={{ headerShown: false }} name="RegisterCustomer" component={RegisterCustomerScreen} />
         <Stack.Screen options={{ headerShown: false }} name="RegisterWorkshop" component={RegisterWorkshopScreen} />
 
-        <Stack.Screen name="MapScreenCustomer" component={MapScreenCustomer} />
-        <Stack.Screen name="MapScreenWorkshop" component={MapScreenWorkshop} />
+        <Stack.Screen options={{ headerShown: false }} name="MapScreenCustomer" component={MapScreenCustomer} />
+        <Stack.Screen options={{ headerShown: false }} name="MapScreenWorkshop" component={MapScreenWorkshop} />
         <Stack.Screen name="BengkelDetail" component={BengkelDetail} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="ChatList" component={ChatList} />
+        <Stack.Screen options={{ headerShown: false }} name="ChatList" component={ChatList} />
         <Stack.Screen name="LiveLocation" component={LiveLocation} />
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} />
+        <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} /> 
         <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetailScreen} />
-
-
+        <Stack.Screen options={{headerShown: false}} name="TopUpScreen" component={TopUpScreen} />
+        <Stack.Screen name="PaymentTopUpScreen" component={PaymentTopUpScreen} />
       </Stack.Navigator>
   )
 }

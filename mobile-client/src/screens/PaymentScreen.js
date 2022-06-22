@@ -2,8 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useEffect, useState } from "react";
+
 import { Button, Text, HStack, VStack, Center, Box, Image, Icon } from "native-base";
 // import { Button, Text, View } from "react-native";
+
+import LoadingAll from "../components/LoadingAll";
+
 import { URL } from "../constant/listurl";
 import { Dimensions } from "react-native";
 import { mainColor } from "../constant/color";
@@ -16,8 +20,6 @@ export default function PaymentScreen({ route }) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
   const [token, setToken] = useState({});
-  console.log(user, '>>>>>>>>>>');
-  console.log(orderDetail, ">>>>> ")
 
   const navigation = useNavigation()
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function PaymentScreen({ route }) {
   }, []);
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <LoadingAll></LoadingAll>
   }
 
   const payNow = async () => {
