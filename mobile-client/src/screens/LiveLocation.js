@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import MapViewDirections from "react-native-maps-directions";
 // import imagePath from "../constants/imagePath";
 import * as Location from "expo-location";
+import LoadingAll from "../components/LoadingAll";
 
 export default function LiveLocation({route}) {
   const [location, setLocation] = useState(null);
@@ -102,7 +103,7 @@ export default function LiveLocation({route}) {
 
   if (state.endLoc.latitude === null) {
     return (
-      <Text>Loading Map...</Text>
+      <LoadingAll></LoadingAll>
     )
   }
 

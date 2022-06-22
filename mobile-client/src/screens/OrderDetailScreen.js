@@ -2,10 +2,10 @@ import { Button, HStack, Text } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingMap from "../components/LoadingMap";
 import { URL } from "../constant/listurl";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import LoadingAll from "../components/LoadingAll";
 
 export default function OrderDetailScreen({ route }) {
   const navigation = useNavigation()
@@ -44,7 +44,7 @@ export default function OrderDetailScreen({ route }) {
   }
 
   if (isLoading) {
-    return <LoadingMap></LoadingMap>
+    return <LoadingAll></LoadingAll>
   }
   //!TOLONG DI STYLING YANG MANTAP YAK
   return (

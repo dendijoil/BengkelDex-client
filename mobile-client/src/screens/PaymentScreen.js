@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
+import LoadingAll from "../components/LoadingAll";
 import { URL } from "../constant/listurl";
 
 export default function PaymentScreen({ route }) {
@@ -34,7 +35,7 @@ export default function PaymentScreen({ route }) {
   }, []);
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <LoadingAll></LoadingAll>
   }
 
   const payNow = async() => {

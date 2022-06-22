@@ -4,27 +4,100 @@ import MapScreenWorkshop from "../screens/MapScreenWorkshop";
 import ProfileWorkshop from "../screens/ProfileWorkshop";
 import ChatList from "../screens/ChatList";
 import AddOrderScreens from "../screens/AddOrderScreens";
-import { AntDesign, Fontisto, Octicons, MaterialCommunityIcons } from '@expo/vector-icons'; 
+import {
+  Ionicons,
+  Fontisto,
+  Octicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigatorWorkshop() {
   return (
     <Tab.Navigator>
-      <Tab.Screen options={{ headerShown: false, tabBarIcon: () => {
-        return  <AntDesign name="home" size={24} color="black" />
-      } }} name="Home" component={HomeScreenWorkshop} />
-      <Tab.Screen options={{ headerShown: false, tabBarIcon: () => {
-        return  <MaterialCommunityIcons name="map-search-outline" size={24} color="black" />
-      } }} name="Map" component={MapScreenWorkshop} />
-      <Tab.Screen options={{ tabBarLabel:() => {return null}, headerShown: false, tabBarIcon: () => {
-        return  <Octicons name="diff-added" size={35} color="black" />
-      } }} name="AddOrder" component={AddOrderScreens} />
-      <Tab.Screen options={{ headerShown: false, tabBarIcon: () => {
-        return  <MaterialCommunityIcons name="message-processing-outline" size={24} color="black" />
-      } }} name="Inbox" component={ChatList} />
-      <Tab.Screen options={{ headerShown: false, tabBarIcon: () => {
-        return  <AntDesign name="user" size={24} color="black" />
-      } }} name="Profile" component={ProfileWorkshop}/>
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "ios-home" : "ios-home-outline"}
+                size={24}
+                color={color}
+                style={[]}
+              />
+            );
+          },
+          tabBarActiveTintColor: "#1866E1",
+        }}
+        name="Home"
+        component={HomeScreenWorkshop}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "ios-map" : "ios-map-outline"}
+                size={24}
+                color={color}
+              />
+            );
+          },
+        }}
+        name="Map"
+        component={MapScreenWorkshop}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "ios-add-circle" : "ios-add-circle-outline"}
+                size={40}
+                color={color}
+              />
+            );
+          },
+          tabBarLabel: () => {return null}      
+        }}
+        name="AddOrder"
+        component={AddOrderScreens}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "chatbox-ellipses" : "chatbox-ellipses-outline"}
+                size={24}
+                color={color}
+              />
+            );
+          },
+        }}
+        name="Inbox"
+        component={ChatList}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "person-circle" : "person-circle-outline"}
+                size={24}
+                color={color}
+              />
+            );
+          },
+        }}
+        name="My Workshop"
+        component={ProfileWorkshop}
+      />
     </Tab.Navigator>
-  )
+  );
 }
