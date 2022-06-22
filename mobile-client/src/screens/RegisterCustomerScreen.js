@@ -4,6 +4,9 @@ import logo from "../images/BengkelDex.png"
 import { useState } from "react"
 import axios from "axios"
 import { URL } from "../constant/listurl"
+import { Dimensions } from "react-native";
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export default function LoginScreen({ navigation }) {
 
   const [input, setInput] = useState({
@@ -54,26 +57,44 @@ export default function LoginScreen({ navigation }) {
               placeholder="Name" />
             <Input
               onChangeText={(username) => setInput({ ...input, username })}
-              placeholder="Username" />
+              placeholder="Username" 
+              marginTop={windowHeight * 0.01}
+              />
             <Input
               type="email"
               onChangeText={(email) => setInput({ ...input, email })}
-              placeholder="Email" />
+              placeholder="Email" 
+              marginTop={windowHeight * 0.01}
+            />
             <Input
               onChangeText={(password) => setInput({ ...input, password })}
               type={"password"}
-              placeholder="Password" />
+              placeholder="Password" 
+              marginTop={windowHeight * 0.01}
+            />
             <Input
               onChangeText={(phoneNumber) => setInput({ ...input, phoneNumber })}
-              placeholder="Phone Number" />
+              placeholder="Phone Number" 
+              marginTop={windowHeight * 0.01}
+              />
             <Input
               onChangeText={(address) => setInput({ ...input, address })}
-              placeholder="Address" />
-            <Button bgColor={mainColor} onPress={submit}>Continue</Button>
+              placeholder="Address" 
+              marginTop={windowHeight * 0.01}
+              />
+            <Button bgColor={mainColor} onPress={submit}
+            marginTop={windowHeight * 0.03}
+            >Continue</Button>
           </VStack>
         </Center>
         <Center>
-          <Text>Go<Link color={mainColor} onPress={() => navigation.goBack()} > back</Link></Text>
+          <Button onPress={() => navigation.goBack()} 
+          isExternal _text={{
+            color: "red.400",
+          }}
+          variant="Link"
+          p="0"
+          > Goback</Button>
         </Center>
       </VStack>
     </>
