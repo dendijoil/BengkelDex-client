@@ -31,6 +31,7 @@ export default function AddOrderScreens({ navigation }) {
     (async () => {
       try {
         const storage = await getData()
+        console.log(storage)
         const { data: response } = await axios({
           method: "GET",
           url: URL + `/workshops/services/${storage.payload.id}`,
@@ -62,11 +63,9 @@ export default function AddOrderScreens({ navigation }) {
     try {
       const input = {
         services: checkedState,
-        paymentType: paymentType,
-        username: username,
       }
       const storage = await getData()
-      console.log(input);
+
       const { data: response } = await axios({
         method: "POST",
         url: URL + `/orders/${storage.payload.id}`,
@@ -89,18 +88,8 @@ export default function AddOrderScreens({ navigation }) {
     <SafeAreaView>
       <Text>Create Order Form</Text>
       <VStack>
-        <Input onChangeText={(e) => setUsername(e)}></Input>
         <Text>Order date: {new Date().toISOString().slice(0, 10)}</Text>
         <HStack>
-          <Text>
-            Payment Type
-          </Text>
-          <Select onValueChange={(e) => {
-            setPaymentType(e)
-          }} minWidth="200" accessibilityLabel="Choose Payment Type" placeholder="Choose Payment Type" >
-            <Select.Item label="Cash" value="cash" />
-            <Select.Item label="Balance" value="balance" />
-          </Select>
         </HStack>
         <ScrollView maxW="300" h="80" _contentContainerStyle={{
           px: "20px",

@@ -20,6 +20,8 @@ import ChatList from '../screens/ChatList';
 import LiveLocation from '../screens/LiveLocation';
 import ListOrder from '../screens/ListOrderScreens';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
+import BarcodeScreen from '../screens/BarcodeScreen';
+import PaymentScreen from '../screens/PaymentScreen';
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -51,6 +53,8 @@ export default function StackNavigator() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="ChatList" component={ChatList} />
         <Stack.Screen name="LiveLocation" component={LiveLocation} />
+        <Stack.Screen name="BarcodeScreen" component={BarcodeScreen} />
+        <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} />
         <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetailScreen} />
 

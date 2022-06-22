@@ -9,9 +9,8 @@ import axios from "axios";
 
 export default function OrderDetailScreen({ route }) {
   const navigation = useNavigation()
-  // console.log(route);
+
   const [order, setOrder] = useState({});
-  const [user, setUser] = useState({});
   // const [token, setToken] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -26,11 +25,8 @@ export default function OrderDetailScreen({ route }) {
             "access_token": JSON.parse(workshopStorage).token
           }
         })
-        // console.log(response);
+        console.log(response)
         setOrder(response);
-        setUser(response.User);
-        // console.log(order, user);
-        // console.log(JSON.parse(orderStorage));
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -38,18 +34,9 @@ export default function OrderDetailScreen({ route }) {
     })();
   }, [])
 
-  const doPayment = async () => {
+  const getBarcode = async () => {
     try {
-      const storageWorkshop = await AsyncStorage.getItem("@workshop");
-      console.log(JSON.parse(storageWorkshop).payload.id, order.UserId, order.id, JSON.parse(storageWorkshop).token);
-      const { data: response } = await axios({
-        method: "POST",
-        url: URL + `/payment/${order.id}?WorkshopId=${JSON.parse(storageWorkshop).payload.id}&UserId=${order.UserId}`,
-        headers: {
-          "access_token": JSON.parse(storageWorkshop).token
-        },
-      })
-      navigation.navigate("ListOrder")
+      navigation.navigate("BarcodeScreen", {data: order.id})
     } catch (err) {
       console.log(err);
     }
@@ -64,10 +51,6 @@ export default function OrderDetailScreen({ route }) {
     <SafeAreaView>
       <Text>Order Detail Screen</Text>
       <Text>{order.id}</Text>
-      <Text>{user.name}</Text>
-      <Text>{user.email}</Text>
-      <Text>{user.phone}</Text>
-      <Text>{user.address}</Text>
       <Text>{order.paymentType}</Text>
       <Text>{order.paymentStatus}</Text>
       <Text>{order.date}</Text>
@@ -89,7 +72,7 @@ export default function OrderDetailScreen({ route }) {
       }
       {
         !order.paymentStatus ? 
-        <Button onPress={doPayment}>Finish order?</Button> :
+        <Button onPress={getBarcode}>Finish order?</Button> :
         <Button disabled backgroundColor={"green.300"}>Order Paid</Button>
       }
 
