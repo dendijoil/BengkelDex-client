@@ -62,7 +62,7 @@ export default function ListOrder({ route }) {
           <FlatList
             data={orders}
             w={windowWidth * 0.9}
-            h={windowHeight * 0.5}
+            h={windowHeight * 0.7}
             rounded={"3xl"}
             backgroundColor={'coolGray.300'}
             _contentContainerStyle={{

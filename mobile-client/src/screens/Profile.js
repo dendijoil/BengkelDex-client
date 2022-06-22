@@ -24,7 +24,7 @@ export default function Profile() {
       await AsyncStorage.removeItem("@customer");
       await AsyncStorage.removeItem("@token");
       console.log("logout");
-      navigation.navigate("LandingPageScreens");
+      navigation.replace("LoginCustomer");
     } catch (e) {
       console.log(e);
     }
