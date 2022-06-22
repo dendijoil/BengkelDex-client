@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native';
 import { useEffect, useState } from 'react';
 import { URL } from '../constant/listurl';
+import LoadingAll from '../components/LoadingAll';
 
 const getData = async (key) => {
   try {
@@ -47,7 +48,7 @@ export default function ChatScreen({ route }) {
   // console.log(reciver.TalkJSID, 'reciversssssss');
 
   if (isLoading) {
-    return <Text>Loading reciver</Text>
+    return <LoadingAll></LoadingAll>
   }
 
 

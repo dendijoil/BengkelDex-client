@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }) {
         render: () => {
           return (
             <Center>
-              <Box bg="amber.500" px="2" py="1" rounded="sm" mb={5}>
+              <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
                 Invalid Username or Password !
               </Box>
             </Center>

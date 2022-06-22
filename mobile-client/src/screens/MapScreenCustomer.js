@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { FlatList, View, Dimensions } from "react-native";
 import { Text, Center } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { VStack } from "native-base";
@@ -9,8 +9,12 @@ import axios from "axios";
 import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
-import imageMarker from "../images/customMarker.png"
-import LoadingMap from "../components/LoadingMap"
+import imageMarker from "../images/customMarker.png";
+import LoadingMap from "../components/LoadingMap";
+import { Box } from "native-base";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function MapScreenCustomer() {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -70,46 +74,55 @@ export default function MapScreenCustomer() {
       }
     })();
   }, []);
-  
+
   if (workshopNear === null) {
-    return <LoadingMap></LoadingMap>
+    return <LoadingMap></LoadingMap>;
   }
 
   return (
-      <VStack space={2}>
-        <Center>
-        <Text fontSize={"2xl"} fontWeight={"bold"}>Search for Workshops</Text>
-        </Center>
-        <MapView style={{ height: 400 }}>
-          <Marker coordinate={currentLoc} />
-          {workshopNear.map((location, i) => (
-            <Marker
+    <VStack>
+      <MapView
+        style={{ height: windowHeight * 0.6 }}
+        initialRegion={currentLoc}
+      >
+        <Marker coordinate={currentLoc} />
+        {workshopNear.map((location, i) => (
+          <Marker
             title={location.name}
-            description={`${location.address.slice(0,20)}...`}
+            description={`${location.address.slice(0, 20)}...`}
             image={imageMarker}
-              coordinate={{
-                latitude: location.location.coordinates[1],
-                longitude: location.location.coordinates[0],
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-              key={i}
-            />
-          ))}
-        </MapView>
-        <View>
-          <FlatList
-            data={workshopNear}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{
-              marginTop: 10,
-              paddingBottom: 50,
+            coordinate={{
+              latitude: location.location.coordinates[1],
+              longitude: location.location.coordinates[0],
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
             }}
-            showsVerticalScrollIndicator={true}
-            scrollEnabled={true}
+            key={i}
           />
-        </View>
-      </VStack>
+        ))}
+      </MapView>
+      <View
+        style={{
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          bottom: 40,
+          backgroundColor: "white",
+          height: windowHeight * 0.6
+        }}
+      >
+        <FlatList
+          data={workshopNear}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{
+            marginTop: 20,
+            marginHorizontal: 20,
+            paddingBottom: 50,
+          }}
+          showsVerticalScrollIndicator={true}
+          scrollEnabled={true}
+        />
+      </View>
+    </VStack>
   );
 }

@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { mainColor } from "../constant/color";
 import ListOrderCard from "../components/ListOrderCard";
 import { useIsFocused } from "@react-navigation/native";
+import LoadingAll from "../components/LoadingAll";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -37,7 +38,7 @@ export default function ListOrder({ route }) {
   }, [isFocused])
 
   if (isLoading) {
-    return <Text>Loading..</Text>
+    return <LoadingAll></LoadingAll>
   }
 
   return (

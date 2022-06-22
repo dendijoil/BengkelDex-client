@@ -10,7 +10,7 @@ export default function BengkelCard({ workshop }) {
   }
   return (
 
-    <HStack space={4} justifyContent={"space-between"} p={3} w={"full"} background={mainColor} rounded={"xl"}>
+    <HStack space={4} justifyContent={"space-between"} mb={3} p={3} w={"full"} background={mainColor} rounded={"xl"} shadow="10">
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate("BengkelDetail", { id: workshop.id, data: workshop })}
@@ -21,8 +21,8 @@ export default function BengkelCard({ workshop }) {
           </Center>
           <Center>
             <VStack>
-              <Text>{workshop.name}</Text>
-              <Text Text isTruncated maxW="240" w="80%">{workshop.address}</Text>
+              <Text isTruncated maxW="180">{workshop.name}</Text>
+              <Text Text isTruncated maxW="160" w="80%">{workshop.address}</Text>
             </VStack>
           </Center>
         </HStack>

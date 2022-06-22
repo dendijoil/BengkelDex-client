@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { URL } from "../constant/listurl";
 import axios from "axios";
-import LoadingMap from "../components/LoadingMap";
 import { useIsFocused } from "@react-navigation/native";
+import LoadingAll from "../components/LoadingAll";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -81,7 +81,7 @@ export default function AddOrderScreens({ navigation }) {
   }
 
   if (isLoading) {
-    return <LoadingMap/>
+    return <LoadingAll></LoadingAll>
   }
   return (
 
