@@ -1,7 +1,10 @@
 import { Text, Button, View } from "native-base"
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingMap from "../components/LoadingMap";
+import { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+// import { useIsFocused } from "@react-navigation/native";
 export default function LandingPageScreens({ navigation }) {
   const [user, setUser] = useState(null);
   const [workshop, setWorkshop] = useState(null);
@@ -10,24 +13,27 @@ export default function LandingPageScreens({ navigation }) {
     navigation.navigate("LoginCustomer");
   }
 
-  const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
-  const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
-
-  // if (user) {
-  //   return (
-  //     <View>
-  //       <Text>Loading...</Text>
-  //     </View>
-  //   )
-  // }
-
-  if (user) {
-    navigation.replace("HomeScreenCustomer");
-  } else if(workshop) {
-    navigation.replace("HomeScreenWorkshop");
-  } else if (!workshop || !user) {
-    navigation.replace("LoginCustomer");
-  }
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem("@customer").then(res => { setUser(res) })
+      AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
+    }, [])
+  );
+  
+  
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        navigation.replace("HomeScreenCustomer");
+      } else if (workshop) {
+        navigation.replace("HomeScreenWorkshop");
+      } 
+    }, [user, workshop])
+    );
+    
+    // else if (!workshop || !user) {
+    //   navigation.replace("LoginCustomer");
+    // }
 
   return (
 

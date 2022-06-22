@@ -1,7 +1,6 @@
 
-import { NavigationContainer } from '@react-navigation/native';
+
 import { createStackNavigator } from '@react-navigation/stack';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import LandingPageScreens from "../screens/LandingPageScreens";
 import LoginCustomerScreen from "../screens/LoginCustomerScreen";
 import LoginWorkshopScreen from "../screens/LoginWorkshopScreen";
@@ -11,7 +10,7 @@ import MapScreenCustomer from '../screens/MapScreenCustomer';
 import TabNavigator from './TabNavigator';
 import TabNavigatorWorkshop from './TabNavigatorWorkshop';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigation } from '@react-navigation/native';
 import BengkelDetail from '../screens/BengkelDetail';
 import MapScreenWorkshop from '../screens/MapScreenWorkshop';
@@ -22,20 +21,38 @@ import ListOrder from '../screens/ListOrderScreens';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
 import BarcodeScreen from '../screens/BarcodeScreen';
 import PaymentScreen from '../screens/PaymentScreen';
+import { useFocusEffect } from "@react-navigation/native";
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
+  const navigation = useNavigation()
 
   const [user, setUser] = useState(null);
   const [workshop, setWorkshop] = useState(null);
 
-  const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
-  const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem("@customer").then(res => { setUser(res) })
+      AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
+    }, [])
+  );
+  
+  
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        navigation.navigate("HomeScreenCustomer");
+      } else if (workshop) {
+        navigation.navigate("HomeScreenWorkshop");
+      } else if (!workshop || !user) {
+        navigation.navigate("LoginCustomer");
+      }
+    }, [user, workshop])
+    );
 
   return (
-    <NavigationContainer>
       <Stack.Navigator >
-        <Stack.Screen name="LandingPageScreens" component={LandingPageScreens} />
+        {/* <Stack.Screen name="LandingPageScreens" component={LandingPageScreens} /> */}
 
         <Stack.Screen options={{ headerShown: false }} name="LoginCustomer" component={LoginCustomerScreen} />
         <Stack.Screen options={{ headerShown: false }} name="HomeScreenCustomer" component={TabNavigator} />
@@ -60,6 +77,5 @@ export default function StackNavigator() {
 
 
       </Stack.Navigator>
-    </NavigationContainer>
   )
 }
