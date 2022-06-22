@@ -11,7 +11,6 @@ export default function PaymentScreen({ route }) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
   const [token, setToken] = useState({});
-  console.log(orderDetail)
 
   const navigation = useNavigation()
   useEffect(() => {
