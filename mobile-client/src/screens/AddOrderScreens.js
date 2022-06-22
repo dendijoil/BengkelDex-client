@@ -54,6 +54,7 @@ export default function AddOrderScreens({ navigation }) {
       checked = checked.filter(item => item !== id)
     }
     setCheckedState(checked)
+    console.log(checkedState)
   }
 
   const handleSubmit = async (e) => {
@@ -65,6 +66,7 @@ export default function AddOrderScreens({ navigation }) {
         username: username,
       }
       const storage = await getData()
+      console.log(input);
       const { data: response } = await axios({
         method: "POST",
         url: URL + `/orders/${storage.payload.id}`,
@@ -73,7 +75,7 @@ export default function AddOrderScreens({ navigation }) {
         },
         data: input
       })
-      console.log(navigation.navigate("HomePage"));
+      navigation.navigate("Home")
     } catch (err) {
       console.log(err);
     }

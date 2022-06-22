@@ -1,6 +1,7 @@
 import { Text, Button, View } from "native-base"
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoadingMap from "../components/LoadingMap";
 export default function LandingPageScreens({ navigation }) {
   const [user, setUser] = useState(null);
   const [workshop, setWorkshop] = useState(null);
@@ -12,27 +13,26 @@ export default function LandingPageScreens({ navigation }) {
   const data = AsyncStorage.getItem("@customer").then(res => { setUser(res) })
   const data2 = AsyncStorage.getItem("@workshop").then(res => { setWorkshop(res) })
 
-  if (user) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    )
-  }
+  // if (user) {
+  //   return (
+  //     <View>
+  //       <Text>Loading...</Text>
+  //     </View>
+  //   )
+  // }
 
   if (user) {
-    navigation.navigate("HomeScreenCustomer");
+    navigation.replace("HomeScreenCustomer");
   } else if(workshop) {
-    navigation.navigate("HomeScreenWorkshop");
+    navigation.replace("HomeScreenWorkshop");
   } else if (!workshop || !user) {
-    navigation.navigate("LoginCustomer");
+    navigation.replace("LoginCustomer");
   }
 
   return (
 
     <>
-      <Text>Splash Screen</Text>
-      <Button onPress={navigateToLoginCustomer}></Button>
+      <LoadingMap></LoadingMap>
     </>
 
   )
