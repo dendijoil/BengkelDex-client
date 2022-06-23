@@ -76,7 +76,7 @@ export default function LiveLocation({ route }) {
           },
         });
       })();
-    }, 4000);
+    }, 100);
     return () => clearInterval(interval);
   });
 
@@ -130,6 +130,11 @@ export default function LiveLocation({ route }) {
             strokeWidth={3}
             strokeColor="#3399FF"
             optimizeWaypoints={true}
+            onReady={(result) => {
+              setDuration(result.duration);
+
+
+            }}
           />
           <MapViewDirections
             origin={startLoc}
@@ -139,7 +144,6 @@ export default function LiveLocation({ route }) {
             strokeColor="gray"
             optimizeWaypoints={true}
             onReady={(result) => {
-              setDuration(result.duration);
 
               mapRef.current.fitToCoordinates(result.coordinates, {
                 edgePadding: {
@@ -155,7 +159,7 @@ export default function LiveLocation({ route }) {
       </View>
       <Center>
         <View style={styles.bottomCard}>
-          <View style={{flexDirection: "row", alignItems: "center", paddingLeft: 8}}>
+          <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 8 }}>
             <Image source={pin} style={{ width: 30, height: 30 }} />
             <Text>{route.params.data.address.slice(0, 25)}...</Text>
           </View>
