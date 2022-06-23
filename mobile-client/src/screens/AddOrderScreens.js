@@ -47,26 +47,16 @@ export default function AddOrderScreens({ navigation }) {
 
   const handleChange = async (id, e) => {
     try {
-      // console.log(id, e, 'inputan');
-      // console.log(checkedState, checked, 'SEBELUM')
       if (checkedState.length === 0) {
         checked.push(id)
         setCheckedState(checked)
-
-        // console.log(checkedState, "PERTAMA");
       } else if (e === true) {
         checked.push(id)
         setCheckedState(checked)
-
-        // console.log(checkedState, "midle");
       } else if (e === false) {
         checked = checked.filter(item => item !== id)
         setCheckedState(checked)
-        // console.log(checkedState, "filter")
       }
-      // console.log(checkedState, checked, 'SEBELUM DI SET');
-      // console.log(checkedState, checked, 'AFTER SET');
-      // console.log('==============================================');
     } catch (err) {
       console.log(err);
     }

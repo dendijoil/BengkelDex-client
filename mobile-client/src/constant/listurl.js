@@ -1,2 +1,2 @@
 
-export const URL = 'https://fd32-36-70-219-218.ap.ngrok.io'
+export const URL = "https://0e66-125-166-0-248.ap.ngrok.io"
