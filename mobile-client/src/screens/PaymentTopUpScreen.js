@@ -12,7 +12,7 @@ export default function PaymentTopUpScreen({ route }) {
       const { url } = newNavState;
       let userData = await AsyncStorage.getItem("@customer");
       userData = JSON.parse(userData);
-      if (url.includes("capture")) {
+      if (url.includes("capture") || url.includes("success")) {
         userData.payload.balance += amount;
         await AsyncStorage.setItem(`@customer`, JSON.stringify(userData));
         navigation.replace("HomeScreenCustomer");
