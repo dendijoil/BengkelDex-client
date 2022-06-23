@@ -1,6 +1,4 @@
 import { FlatList, View, Dimensions } from "react-native";
-import { Text, Center } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { VStack } from "native-base";
 import MapView, { Marker } from "react-native-maps";
 import { useState, useEffect } from "react";
@@ -9,7 +7,8 @@ import axios from "axios";
 import { URL } from "../constant/listurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BengkelCard from "../components/BengkelCard";
-import imageMarker from "../images/customMarker.png";
+import blueIndicator from "../assets/images/blueMarker.png";
+import currentIndicator from "../assets/images/Oval.png";
 import LoadingMap from "../components/LoadingMap";
 import { Box } from "native-base";
 
@@ -85,12 +84,12 @@ export default function MapScreenCustomer() {
         style={{ height: windowHeight * 0.6 }}
         initialRegion={currentLoc}
       >
-        <Marker coordinate={currentLoc} />
+        <Marker coordinate={currentLoc} image={currentIndicator} anchor={{x: 0.5, y: 0.5}} />
         {workshopNear.map((location, i) => (
           <Marker
             title={location.name}
             description={`${location.address.slice(0, 20)}...`}
-            image={imageMarker}
+            image={blueIndicator}
             coordinate={{
               latitude: location.location.coordinates[1],
               longitude: location.location.coordinates[0],
