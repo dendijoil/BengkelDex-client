@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
+import LoadingAll from '../components/LoadingAll';
 
 export default function PayOnline() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -22,7 +23,7 @@ export default function PayOnline() {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <LoadingAll />;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;

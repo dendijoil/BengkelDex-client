@@ -13,7 +13,7 @@ export default function UserCard({ workshop }) {
       mb={3}
       p={3}
       w={"full"}
-      background={mainColor}
+      background={"blue.200"}
       rounded={"xl"}
       shadow="10"
     >
@@ -38,8 +38,8 @@ export default function UserCard({ workshop }) {
         </Center>
       </HStack>
       <Center>
-        <Button rounded={"md"} backgroundColor={"green.300"}>
-          <Text onPress={navigateToChat}>Chat me !</Text>
+        <Button rounded={"md"} backgroundColor={"green.400"}>
+          <Text onPress={navigateToChat}>Message</Text>
         </Button>
       </Center>
     </HStack>

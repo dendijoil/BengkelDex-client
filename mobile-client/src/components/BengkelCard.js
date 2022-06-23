@@ -10,7 +10,7 @@ export default function BengkelCard({ workshop }) {
   }
   return (
 
-    <HStack space={4} justifyContent={"space-between"} mb={3} p={3} w={"full"} background={mainColor} rounded={"xl"} shadow="10">
+    <HStack space={4} justifyContent={"space-between"} mb={3} p={3} w={"full"} background={"blue.200"} rounded={"xl"} shadow={5} >
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate("BengkelDetail", { id: workshop.id, data: workshop })}
@@ -28,8 +28,8 @@ export default function BengkelCard({ workshop }) {
         </HStack>
       </TouchableOpacity>
       <Center >
-        <Button rounded={'md'} backgroundColor={"green.300"}>
-          <Text onPress={navigateToChat} >Chat me !</Text>
+        <Button rounded={'md'} backgroundColor={"green.400"}>
+          <Text onPress={navigateToChat} >Message</Text>
         </Button>
       </Center>
     </HStack>

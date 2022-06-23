@@ -50,7 +50,7 @@ export default function TabNavigator() {
             );
           },
         }}
-        name="Oneline Payment"
+        name="Online Payment"
         component={PayOnline}
       />
       <Tab.Screen

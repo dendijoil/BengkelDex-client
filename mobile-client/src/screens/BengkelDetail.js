@@ -74,7 +74,7 @@ export default function BengkelDetail({ route, navigation }) {
         {workshopDetail.Services.map(el => {
           return (
             <>
-            <HStack backgroundColor={"coolGray.300"} w={"4/5"} flexWrap={"wrap"} justifyContent={"space-between"}
+            <HStack backgroundColor={"coolGray.300"} w={"4/5"} flexWrap={"wrap"} justifyContent={"space-between"} borderRadius={15} marginBottom={2}
             >
               <Text fontSize="lg"
               marginLeft={windowWidth * 0.02}
@@ -96,18 +96,19 @@ export default function BengkelDetail({ route, navigation }) {
       <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
 
       <Center>
-        <Flex direction="row"
+        <View
         marginTop={windowHeight * 0.03}
+        style={{flexDirection: "row"}}
         >
-          <Button w={windowWidth * 0.25} backgroundColor={mainColor} onPress={navigateToChat} workshop={workshopDetail}
+          <Button w={windowWidth * 0.3} backgroundColor={mainColor} onPress={navigateToChat} workshop={workshopDetail}
               marginRight={windowWidth * 0.05}
           >
             <Text color={"#ecfeff"} bold>Chat !</Text>
           </Button>
-          <Button w={windowWidth * 0.25} backgroundColor={mainColor} onPress={navigateToLiveLocation} workshop={workshopDetail}>
+          <Button w={windowWidth * 0.3} backgroundColor={mainColor} onPress={navigateToLiveLocation} workshop={workshopDetail}>
             <Text color={"#ecfeff"} bold>Navigation</Text>
           </Button>
-        </Flex>
+        </View>
       </Center>
     </VStack>
 
