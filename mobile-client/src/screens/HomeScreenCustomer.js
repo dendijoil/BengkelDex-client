@@ -23,6 +23,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import priceToRupiah from "../helpers/priceToRupiah";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -187,7 +188,7 @@ export default function HomeScreenCustomer() {
           Balance:
         </Text>
         <Text fontWeight={400} mt={0} fontSize={25}>
-          {customer.balance}
+          {priceToRupiah(customer.balance)}
         </Text>
       </VStack>
     </SafeAreaView>

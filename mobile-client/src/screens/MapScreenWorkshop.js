@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { FlatList, View, Dimensions } from "react-native";
 import { Text, Center } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { VStack } from "native-base";
@@ -12,11 +12,19 @@ import BengkelCard from "../components/BengkelCard";
 import imageMarker from "../images/customMarker.png"
 import LoadingMap from "../components/LoadingMap";
 import { useIsFocused } from "@react-navigation/native";
+import blueIndicator from "../assets/images/blueMarker.png";
+import currentIndicator from "../assets/images/Oval.png";
+import UserCard from "../components/UserCard";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
+
 export default function MapScreenWorkshop() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
   const isFocused = useIsFocused();
-  const renderItem = ({ item }) => <BengkelCard workshop={item} />;
+  const renderItem = ({ item }) => <UserCard workshop={item} />;
 
   const getData = async (key) => {
     try {
@@ -76,17 +84,14 @@ export default function MapScreenWorkshop() {
   }
 
   return (
-      <VStack space={2}>
-        <Center>
-        <Text fontSize={"2xl"} fontWeight={"bold"}>Search for Workshops</Text>
-        </Center>
-        <MapView style={{ height: 400 }}>
-          <Marker coordinate={currentLoc} />
+      <VStack>
+        <MapView style={{ height: windowHeight * 0.6 }} initialRegion={currentLoc}>
+          <Marker coordinate={currentLoc} image={currentIndicator} />
           {workshopNear.map((location, i) => (
             <Marker
             title={location.name}
             description={`${location.address.slice(0,20)}...`}
-            image={imageMarker}
+            image={blueIndicator}
               coordinate={{
                 latitude: location.location.coordinates[1],
                 longitude: location.location.coordinates[0],
@@ -97,19 +102,28 @@ export default function MapScreenWorkshop() {
             />
           ))}
         </MapView>
-        <View>
-          <FlatList
-            data={workshopNear}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{
-              marginTop: 10,
-              paddingBottom: 50,
-            }}
-            showsVerticalScrollIndicator={true}
-            scrollEnabled={true}
-          />
-        </View>
+        <View
+        style={{
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          bottom: 40,
+          backgroundColor: "white",
+          height: windowHeight * 0.6
+        }}
+      >
+        <FlatList
+          data={workshopNear}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{
+            marginTop: 20,
+            marginHorizontal: 20,
+            paddingBottom: 50,
+          }}
+          showsVerticalScrollIndicator={true}
+          scrollEnabled={true}
+        />
+      </View>
       </VStack>
   );
 }
