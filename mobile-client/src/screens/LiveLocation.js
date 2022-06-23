@@ -1,19 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MapViewDirections from "react-native-maps-directions";
-// import imagePath from "../constants/imagePath";
 import * as Location from "expo-location";
 import LoadingAll from "../components/LoadingAll";
+import currentIndicator from "../assets/images/Oval.png";
+import blueIndicator from "../assets/images/blueMarker.png";
+import { mainColor } from "../constant/color";
+import { Center, Text } from "native-base";
+import pin from "../assets/images/pin.png";
 
-export default function LiveLocation({route}) {
+export default function LiveLocation({ route }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // console.log(route.params.data.location.coordinates[0])
-  // console.log(route.params.data.location.coordinates[1])
-  
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
   // Initial
   useEffect(() => {
     (async () => {
@@ -100,15 +104,12 @@ export default function LiveLocation({route}) {
   const mapRef = useRef();
 
   const { startLoc, currentLoc, endLoc } = state;
-
   if (state.endLoc.latitude === null) {
-    return (
-      <LoadingAll></LoadingAll>
-    )
+    return <LoadingAll></LoadingAll>;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <MapView
           ref={mapRef}
@@ -117,22 +118,18 @@ export default function LiveLocation({route}) {
         >
           <Marker
             coordinate={currentLoc}
-            // image={imagePath.icCurrentLocation}
-            anchor={{x: 0.5, y: 0.5}}
+            image={currentIndicator}
+            anchor={{ x: 0.5, y: 0.5 }}
           />
-          <Marker
-            coordinate={endLoc}
-            // image={imagePath.icGreenMarker}
-          />
+          <Marker coordinate={endLoc} image={blueIndicator} />
 
           <MapViewDirections
             origin={currentLoc}
             destination={endLoc}
             apikey="AIzaSyAAjzQFBz9jwJrx5p9CAgOLZgHoqfK7Wa8"
             strokeWidth={3}
-            strokeColor="#32CD32"
+            strokeColor="#3399FF"
             optimizeWaypoints={true}
-            
           />
           <MapViewDirections
             origin={startLoc}
@@ -142,7 +139,8 @@ export default function LiveLocation({route}) {
             strokeColor="gray"
             optimizeWaypoints={true}
             onReady={(result) => {
-              // console.log(result.distance, result.duration)
+              setDuration(result.duration);
+
               mapRef.current.fitToCoordinates(result.coordinates, {
                 edgePadding: {
                   right: 30,
@@ -155,10 +153,18 @@ export default function LiveLocation({route}) {
           />
         </MapView>
       </View>
-      <View style={styles.bottomCard}>
-        <Text>Where are you going</Text>
-      </View>
-    </SafeAreaView>
+      <Center>
+        <View style={styles.bottomCard}>
+          <View style={{flexDirection: "row", alignItems: "center", paddingLeft: 8}}>
+            <Image source={pin} style={{ width: 30, height: 30 }} />
+            <Text>{route.params.data.address.slice(0, 25)}...</Text>
+          </View>
+          <Text p="0" m="0" pr="3" bold>
+            {Math.ceil(duration)} mins
+          </Text>
+        </View>
+      </Center>
+    </View>
   );
 }
 
@@ -168,7 +174,13 @@ const styles = StyleSheet.create({
   },
   bottomCard: {
     backgroundColor: "white",
-    width: "100%",
-    padding: 30,
+    padding: 10,
+    borderRadius: 20,
+    position: "absolute",
+    bottom: 650,
+    width: 350,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
