@@ -1,6 +1,6 @@
 import { Center, HStack, Text, VStack, Box, Input, Button, Link, Image } from "native-base"
 import { mainColor } from "../constant/color"
-import logo from "../images/BengkelDex.png"
+import logo from "../images/BengkelDexBlue.png"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { URL } from "../constant/listurl"
@@ -66,8 +66,8 @@ export default function LoginScreen({ navigation }) {
         mt={10}
       >
         <Center>
-          <Image size={100} source={logo} alt={"Logo"} >
-          </Image>
+          <Image style={{width: windowWidth * 0.22, height: windowWidth * 0.32, resizeMode: 'stretch'}} 
+          source={logo} alt={"Logo"} />
         </Center>
         <Center>
           <Box>

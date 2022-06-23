@@ -1,7 +1,7 @@
 import { Center, Text, VStack, Box, Input, Button, Link, Image, Flex, CloseIcon, Alert, Toast } from "native-base"
 import { StyleSheet } from "react-native"
 import { mainColor } from "../constant/color"
-import logo from "../images/BengkelDex.png"
+import logo from "../images/BengkelDexBlue.png"
 import { useState, useEffect } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -52,7 +52,8 @@ export default function LoginScreen({ navigation }) {
         render: () => {
           return (
             <Center>
-              <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
+              <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}
+              >
                 Invalid Username or Password !
               </Box>
             </Center>
@@ -79,8 +80,9 @@ export default function LoginScreen({ navigation }) {
         mt={20}
       >
         <Center>
-          <Image size={100} source={logo} alt={"Logo"} >
-          </Image>
+        <Image style={{width: windowWidth * 0.22, height: windowWidth * 0.32, resizeMode: 'stretch'}} 
+          source={logo} alt={"Logo"} />
+
         </Center>
         <Center>
           <Box>
