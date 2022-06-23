@@ -1,5 +1,12 @@
-import { FlatList, View, Dimensions } from "react-native";
-import { VStack } from "native-base";
+import React from "react";
+import {
+  View,
+  Dimensions,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { FlatList, VStack } from "native-base";
 import MapView, { Marker } from "react-native-maps";
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
@@ -15,9 +22,20 @@ import { Box } from "native-base";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 export default function MapScreenCustomer() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const renderItem = ({ item }) => <BengkelCard workshop={item} />;
 
@@ -72,56 +90,79 @@ export default function MapScreenCustomer() {
         console.log(error);
       }
     })();
-  }, []);
+  }, [refreshing]);
 
   if (workshopNear === null) {
     return <LoadingMap></LoadingMap>;
   }
 
   return (
-    <VStack>
-      <MapView
-        style={{ height: windowHeight * 0.6 }}
-        initialRegion={currentLoc}
-      >
-        <Marker coordinate={currentLoc} image={currentIndicator} anchor={{x: 0.5, y: 0.5}} />
-        {workshopNear.map((location, i) => (
+    <ScrollView
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <VStack>
+        <MapView
+          style={{ height: windowHeight * 0.8 }}
+          initialRegion={currentLoc}
+        >
           <Marker
-            title={location.name}
-            description={`${location.address.slice(0, 20)}...`}
-            image={blueIndicator}
-            coordinate={{
-              latitude: location.location.coordinates[1],
-              longitude: location.location.coordinates[0],
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            key={i}
+            coordinate={currentLoc}
+            image={currentIndicator}
+            anchor={{ x: 0.5, y: 0.5 }}
           />
-        ))}
-      </MapView>
-      <View
-        style={{
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          bottom: 40,
-          backgroundColor: "white",
-          height: windowHeight * 0.6
-        }}
-      >
-        <FlatList
-          data={workshopNear}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{
-            marginTop: 20,
-            marginHorizontal: 20,
-            paddingBottom: 50,
+          {workshopNear.map((location, i) => (
+            <Marker
+              title={location.name}
+              description={`${location.address.slice(0, 20)}...`}
+              image={blueIndicator}
+              coordinate={{
+                latitude: location.location.coordinates[1],
+                longitude: location.location.coordinates[0],
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              key={i}
+            />
+          ))}
+        </MapView>
+        <View
+          style={{
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            bottom: 40,
+            backgroundColor: "white",
+            height: windowHeight * 0.6,
           }}
-          showsVerticalScrollIndicator={true}
-          scrollEnabled={true}
-        />
-      </View>
-    </VStack>
+        >
+          <FlatList
+            data={workshopNear}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{
+              marginTop: 20,
+              marginHorizontal: 20,
+              paddingBottom: 50,
+            }}
+            showsVerticalScrollIndicator={true}
+            scrollEnabled={true}
+          />
+        </View>
+      </VStack>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

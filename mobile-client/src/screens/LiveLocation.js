@@ -76,7 +76,7 @@ export default function LiveLocation({ route }) {
           },
         });
       })();
-    }, 100);
+    }, 4000);
     return () => clearInterval(interval);
   });
 

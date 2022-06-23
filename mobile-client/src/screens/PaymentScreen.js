@@ -56,7 +56,7 @@ export default function PaymentScreen({ route }) {
           access_token: token
         }
       })
-      navigation.navigate("HomePage")
+      navigation.navigate("Home")
 
     } catch (error) {
       console.log(error)
@@ -141,7 +141,7 @@ export default function PaymentScreen({ route }) {
 
 
       <Center>
-        <Button w={windowWidth * 0.4} h={windowHeight * 0.05} rounded={"3xl"}>
+        <Button w={windowWidth * 0.4} h={windowHeight * 0.05} rounded={"3xl"} onPress={payNow}>
           <HStack space={windowWidth * 0.01}>
             <Icon as={FontAwesome} name={"send"} size={"4"} color={"blue.100"} />
             {/* <AntDesign name="home" size={24} color="black" /> */}
