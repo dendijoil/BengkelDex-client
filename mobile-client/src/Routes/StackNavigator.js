@@ -75,7 +75,7 @@ export default function StackNavigator() {
         <Stack.Screen name="BarcodeScreen" component={BarcodeScreen} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ListOrder" component={ListOrder} /> 
-        <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetailScreen} />
         <Stack.Screen options={{headerShown: false}} name="TopUpScreen" component={TopUpScreen} />
         <Stack.Screen name="PaymentTopUpScreen" component={PaymentTopUpScreen} />
       </Stack.Navigator>

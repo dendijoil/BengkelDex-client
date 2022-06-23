@@ -1,4 +1,4 @@
-import { VStack, ScrollView, Center, Box, CheckIcon, HStack, Image, Text, Input, Checkbox, Select, Button } from "native-base"
+import { VStack, ScrollView, Center, Box, CheckIcon, HStack, Image, Text, Input, Checkbox, Select, Button, Toast } from "native-base"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { useState, useEffect } from "react";
@@ -7,6 +7,7 @@ import { URL } from "../constant/listurl";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import LoadingAll from "../components/LoadingAll";
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import priceToRupiah from "../helpers/priceToRupiah";
@@ -142,7 +143,7 @@ export default function AddOrderScreens({ navigation }) {
                   {services.map((item, index) => {
                     return (
                       <Center key={index}>
-                        <Box key={index} w={windowWidth * 0.5} h={windowHeight * 0.05} backgroundColor={"blue.100"} rounded={"2xl"} shadow={'9'}>
+                        <Box key={index} w={windowWidth * 0.5} h={windowHeight * 0.06} backgroundColor={"blue.100"} rounded={"2xl"} shadow={'9'}>
                           <HStack justifyContent={"space-between"}>
                             {/* <Text>{item.id}</Text> */}
                             <VStack ml={windowWidth * 0.05}>
