@@ -14,6 +14,7 @@ import LoadingMap from "../components/LoadingMap";
 import { useIsFocused } from "@react-navigation/native";
 import blueIndicator from "../assets/images/blueMarker.png";
 import currentIndicator from "../assets/images/Oval.png";
+import UserCard from "../components/UserCard";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -23,7 +24,7 @@ export default function MapScreenWorkshop() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [token, setToken] = useState({});
   const isFocused = useIsFocused();
-  const renderItem = ({ item }) => <BengkelCard workshop={item} />;
+  const renderItem = ({ item }) => <UserCard workshop={item} />;
 
   const getData = async (key) => {
     try {
