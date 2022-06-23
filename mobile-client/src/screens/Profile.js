@@ -62,7 +62,7 @@ export default function Profile() {
                   borderWidth={"2"}
                   borderColor={"coolGray.400"}
                   source={{
-                    uri: "https://media-exp2.licdn.com/dms/image/C5103AQFb3SSll63O9g/profile-displayphoto-shrink_800_800/0/1548945277576?e=1661385600&v=beta&t=nUHcnAezfb0SSst5nOlOrGR3HxjKVr35uezUz3j-8Ho",
+                    uri: customer.imgUrl,
                   }}
                   alt={"Logo"}
                 />

@@ -56,8 +56,13 @@ export default function PaymentScreen({ route }) {
           access_token: token
         }
       })
+      
+      let userData = await AsyncStorage.getItem("@customer")
+      userData = JSON.parse(userData)
+      userData.payload.balance -= orderDetail.totalPrice;
+      await AsyncStorage.setItem(`@customer`, JSON.stringify(userData))
+      
       navigation.navigate("Home")
-
     } catch (error) {
       console.log(error)
     }
@@ -129,8 +134,8 @@ export default function PaymentScreen({ route }) {
                 h={windowHeight * 0.2}
                 rounded={"3xl"}
               >
-                {orderDetail.OrderDetails.map(el => {
-                  return <Text >{el.Service.name}</Text>
+                {orderDetail.OrderDetails.map((el, index) => {
+                  return <Text key={index}>{el.Service.name}</Text>
                 })}
               </Box>
             </Center>

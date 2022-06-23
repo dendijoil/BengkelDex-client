@@ -13,7 +13,7 @@ import { mainColor, secondaryColor } from "../constant/color";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../constant/listurl";
 import * as Location from "expo-location";
@@ -28,10 +28,12 @@ import priceToRupiah from "../helpers/priceToRupiah";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+
+
 export default function HomeScreenCustomer() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
+  const isFocused = useIsFocused()
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -90,11 +92,9 @@ export default function HomeScreenCustomer() {
       setToken(res.token);
     });
     statusBroadcast();
-  }, [isEnabled]);
+  }, [isEnabled, isFocused]);
 
-  const navigateToMap = () => {
-    navigation.navigate("MapScreenCustomer");
-  };
+  
 
   console.log(customer);
   return (

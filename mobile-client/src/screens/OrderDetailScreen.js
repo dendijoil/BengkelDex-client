@@ -1,4 +1,4 @@
-import { Button, HStack, Text } from "native-base";
+import { Button, HStack, Text, VStack, Box, Divider, Center, View } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -6,9 +6,15 @@ import { URL } from "../constant/listurl";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import LoadingAll from "../components/LoadingAll";
+import priceToRupiah from "../helpers/priceToRupiah";
+import { Dimensions } from "react-native";
+
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function OrderDetailScreen({ route }) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const [order, setOrder] = useState({});
   // const [token, setToken] = useState({});
@@ -22,60 +28,94 @@ export default function OrderDetailScreen({ route }) {
           method: "GET",
           url: URL + `/orders/${route.params.id}`,
           headers: {
-            "access_token": JSON.parse(workshopStorage).token
-          }
-        })
-        console.log(response)
+            access_token: JSON.parse(workshopStorage).token,
+          },
+        });
+        console.log(response);
         setOrder(response);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [])
+  }, []);
 
   const getBarcode = async () => {
     try {
-      navigation.navigate("BarcodeScreen", {data: order.id})
+      navigation.navigate("BarcodeScreen", { data: order.id });
     } catch (err) {
       console.log(err);
     }
-
-  }
+  };
 
   if (isLoading) {
-    return <LoadingAll></LoadingAll>
+    return <LoadingAll></LoadingAll>;
   }
-  //!TOLONG DI STYLING YANG MANTAP YAK
+  console.log(order);
   return (
     <SafeAreaView>
-      <Text>Order Detail Screen</Text>
-      <Text>{order.id}</Text>
-      <Text>{order.paymentType}</Text>
-      <Text>{order.paymentStatus}</Text>
-      <Text>{order.date}</Text>
-
-      {order.OrderDetails.map(el => {
-        return (
-          <HStack key={el.id} justifyContent={"space-between"}>
-            <Text>{el.Service.name}</Text>
-            <Text>{el.Service.price}</Text>
-
+      <VStack space="0" divider={<Divider />}>
+        <Box px="4" pt="4" mb="0" pb="4" backgroundColor={"blue.200"}>
+          <Text bold="200" fontSize={30}>Order ID: {order.id}</Text>
+        </Box>
+        <Box  px="4" pt="4" mb="0" pb="4">
+          <Text bold="100" fontSize={30}>Details</Text>
+          <Text bold="100" fontSize={22}>Order Created: {order.createdAt.slice(0,10)}</Text>
+          <Text bold="100" fontSize={22}>Services:</Text>
+          {order.OrderDetails.map((el) => {
+            return (
+              <HStack key={el.id} justifyContent={"space-between"}>
+                <Text fontSize={18}>{el.Service.name}</Text>
+                <Text fontSize={16}>
+                  {priceToRupiah(el.Service.price)}
+                </Text>
+              </HStack>
+            );
+          })}
+        </Box>
+        <Box px="4" pb="4">
+          <HStack justifyContent={"space-between"} pt="3">
+            <Text fontSize={18} bold="200">Total Price</Text>
+            <Text fontSize={18} bold="300">{priceToRupiah(order.totalPrice)}</Text>
           </HStack>
-        )
-      })}
-
-      <Text>TOTAL PRICE {order.totalPrice}</Text>
-      {!order.paymentStatus ?
-        <Text>Status payment : <Text color={"red.400"}>UnPaid</Text></Text> :
-        <Text>Status payment : <Text color={"green.400"}>Paid</Text></Text>
+        </Box>
+        <Center pt={3}>
+        {
+        !order.paymentStatus ?
+        <Button onPress={getBarcode} backgroundColor={"blue.800"} w={200}>Generate Barcode</Button> :
+        <Button disabled backgroundColor={"green.400"} w={200}>Order has been Paid</Button>
       }
-      {
-        !order.paymentStatus ? 
-        <Button onPress={getBarcode}>Finish order?</Button> :
-        <Button disabled backgroundColor={"green.300"}>Order Paid</Button>
-      }
-
+        </Center>
+      </VStack>
     </SafeAreaView>
-  )
+    // <SafeAreaView>
+    //   <Text>Order Detail Screen</Text>
+    //   <Text>{order.id}</Text>
+    //   <Text>{order.paymentType}</Text>
+    //   <Text>{order.paymentStatus}</Text>
+    //   <Text>{order.date}</Text>
+
+    //   {order.OrderDetails.map(el => {
+    //     return (
+    //       <HStack key={el.id} justifyContent={"space-between"}>
+    //         <Text>{el.Service.name}</Text>
+    //         <Text>{el.Service.price}</Text>
+
+    //       </HStack>
+    //     )
+    //   })}
+
+    //   <Text>TOTAL PRICE {order.totalPrice}</Text>
+    //   {!order.paymentStatus ?
+    //     <Text>Status payment : <Text color={"red.400"}>UnPaid</Text></Text> :
+    //     <Text>Status payment : <Text color={"green.400"}>Paid</Text></Text>
+    //   }
+    //   {
+    //     !order.paymentStatus ?
+    //     <Button onPress={getBarcode}>Finish order?</Button> :
+    //     <Button disabled backgroundColor={"green.300"}>Order Paid</Button>
+    //   }
+
+    // </SafeAreaView>
+  );
 }
