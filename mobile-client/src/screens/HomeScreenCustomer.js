@@ -1,3 +1,14 @@
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import * as Location from "expo-location";
 import {
   Box,
   Text,
@@ -8,32 +19,17 @@ import {
   HStack,
   Switch,
 } from "native-base";
-import logo from "../images/BengkelDex.png";
-import { mainColor, secondaryColor } from "../constant/color";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { URL } from "../constant/listurl";
-import * as Location from "expo-location";
-import {
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
 import priceToRupiah from "../helpers/priceToRupiah";
 
-const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
-
 
 export default function HomeScreenCustomer() {
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const isFocused = useIsFocused()
+
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -94,8 +90,6 @@ export default function HomeScreenCustomer() {
     statusBroadcast();
   }, [isEnabled, isFocused]);
 
-  
-
   console.log(customer);
   return (
     <SafeAreaView style={styles.container}>
@@ -128,7 +122,7 @@ export default function HomeScreenCustomer() {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("MapScreenCustomer")
+            navigation.navigate("MapScreenCustomer");
           }}
           activeOpacity={0.8}
         >
